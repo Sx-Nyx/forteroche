@@ -1,0 +1,15 @@
+{
+    "name": "snyder/forteroche",
+    "authors": [
+        {
+            "name": "Kenjy THIEABAULT",
+            "email": "kenjy.thiebault@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Framework\\": "src"
+        }
+    },
+    "require": {}
+}
