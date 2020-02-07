@@ -1,0 +1,42 @@
+.header {
+  @extend %wrapper;
+  padding: 25px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.header__nav {
+  & a{
+    margin-right: 25px;
+    color: $black-color;
+    transition: color .3s;
+  }
+  & a:last-child {
+    margin-right: 0;
+  }
+  & a:hover{
+    color: rgba(0, 0, 0, 0.51);
+  }
+}
+
+.header__logo {
+  font-family: 'Montserrat', cursive;
+  color: $logo-color;
+  transition: color .3s;
+  &:hover {
+    color: rgb(0, 0, 0);
+  }
+}
+
+
+@media only screen and (max-width: 400px) {
+  .header {
+    display: block;
+    text-align: center;
+  }
+  .header__nav {
+    margin-top: 25px;
+  }
+}

@@ -1,0 +1,19 @@
+.wrapper {
+  @extend %wrapper;
+  padding: 40px 0 100px 0;
+}
+
+.wrapper_background {
+  @extend %wrapper_background;
+  background-color: $wrapper-bg;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+
+@media only screen and (max-width: 1080px) {
+  .wrapper {
+    @extend %wrapper;
+    padding: 40px 0 40px 0;
+  }
+}
