@@ -1,18 +1,10 @@
-.btn {
-  margin-top: 35px;
-}
-
 .btn__link {
+  cursor: pointer;
+  font-family: "Open Sans", sans-serif;
   color: #FFFFFF;
   padding: 12px 25px 12px 25px;
+  border: none;
   border-radius: 4px;
   background-color: $btn-bg;
   box-shadow: 9px 9px 16px rgb(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
-}
-
-@media only screen and (max-width: 800px) {
-  .btn {
-    text-align: center;
-    margin-top: 40px;
-  }
 }
