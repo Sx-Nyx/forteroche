@@ -1,0 +1,96 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  @extend %wrapper;
+}
+
+.dashboard .actions {
+  display: flex;
+  margin: 50px 0;
+  margin-left: auto;
+}
+
+.actions .btn {
+  margin-right: 15px;
+}
+.dashboard .actions .btn .btn__link {
+  display: block;
+}
+
+.dashboard table {
+  text-align: left;
+}
+
+.dashboard thead {
+  border-top: 1px solid #dee2e6;
+  font-weight: 700;
+  color: $black-color;
+}
+
+.dashboard__actions {
+   margin-right: 15px;
+ }
+
+.dashboard__actions:nth-child(even) {
+  margin-right: 0;
+}
+
+.dashboard__icon {
+  height: 17px;
+  width: 17px;
+  fill: $blue-title;
+}
+
+.dashboard__icon.dashboard__icon-red {
+  fill: #ff3640;
+}
+
+.dashboard table tr th,
+.dashboard table tr td {
+  padding: .75rem 0;
+}
+
+.dashboard table tr td {
+  border-top: 1px solid #dee2e6;
+}
+
+.dashboard table tr:nth-child(even) {
+  background-color: #dee2e6;
+  color: $black-color;
+}
+
+.dashboard table tr td:nth-child(2) {
+  position: relative;
+}
+
+.dashboard table tr td:nth-child(2):before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 52%;
+  transform: translateY(-52%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #ff3640;
+}
+
+.dashboard table tr td:nth-child(2).active:before {
+  background-color: #4fa837;
+}
+
+@media only screen and (max-width: 460px) {
+  .dashboard .actions {
+    margin: 20px auto;
+    display: block;
+  }
+
+  .dashboard .actions .btn {
+    margin-right: 0;
+  }
+
+  .dashboard .actions .btn:nth-child(even) {
+    margin-top: 20px;
+  }
+}
+
