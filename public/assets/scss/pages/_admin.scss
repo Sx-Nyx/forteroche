@@ -6,12 +6,15 @@
 
 .dashboard .actions {
   display: flex;
-  margin: 50px 0;
-  margin-left: auto;
+  margin: 16px 0 24px auto;
 }
 
-.actions .btn {
-  margin-right: 15px;
+.actions .btn:first-child {
+  margin-right: 16px;
+}
+
+.actions .btn .btn__link{
+  font-size: .85rem;
 }
 .dashboard .actions .btn .btn__link {
   display: block;
@@ -19,21 +22,19 @@
 
 .dashboard table {
   text-align: left;
+  border-radius: 8px;
+  box-shadow: 9px 9px 16px rgb(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
+  overflow: hidden;
 }
 
 .dashboard thead {
-  border-top: 1px solid #dee2e6;
   font-weight: 700;
   color: $black-color;
 }
 
-.dashboard__actions {
+.dashboard__actions:first-child {
    margin-right: 15px;
  }
-
-.dashboard__actions:nth-child(even) {
-  margin-right: 0;
-}
 
 .dashboard__icon {
   height: 17px;
@@ -55,7 +56,7 @@
 }
 
 .dashboard table tr:nth-child(even) {
-  background-color: #dee2e6;
+  background-color: #f3f3f3;
   color: $black-color;
 }
 

@@ -11,7 +11,7 @@
         <thead>
         <tr>
             <th>Titre</th>
-            <th>Status</th>
+            <th>Statut</th>
             <th>Actions</th>
         </tr>
         </thead>
