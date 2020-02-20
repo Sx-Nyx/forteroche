@@ -30,13 +30,35 @@
   }
 }
 
+.header__nav a:last-child {
+  position: relative;
+  margin-right: 15px;
+}
 
-@media only screen and (max-width: 400px) {
+// ADMIN
+.header__nav-admin a:last-child .header__notification {
+  position: absolute;
+  top: -10px;
+  padding: 5px 7px;
+  font-size: .65rem;
+  border-radius: 50%;
+  background-color: #ff3640;
+  color: white;
+}
+
+@media only screen and (max-width: 460px) {
   .header {
     display: block;
     text-align: center;
   }
   .header__nav {
     margin-top: 25px;
+  }
+}
+
+@media only screen and (max-width: 295px) {
+  .header__nav-admin a:last-child {
+    display: block;
+    margin-top: 16px;
   }
 }
