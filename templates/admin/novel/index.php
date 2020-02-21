@@ -1,4 +1,4 @@
-<div class="dashboard">
+<div class="dashboard novel">
     <div class="actions">
         <div class="btn">
             <a href="#" class="btn__link">Modifier la description</a>

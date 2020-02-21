@@ -1,7 +1,12 @@
 .dashboard {
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
   @extend %wrapper;
+}
+
+.dashboard.novel {
+  margin-top: 0;
 }
 
 .dashboard .actions {
@@ -60,11 +65,11 @@
   color: $black-color;
 }
 
-.dashboard table tr td:nth-child(2) {
+.dashboard.novel table tr td:nth-child(2) {
   position: relative;
 }
 
-.dashboard table tr td:nth-child(2):before {
+.dashboard.novel table tr td:nth-child(2):before {
   content: '';
   position: absolute;
   left: -10px;
@@ -76,7 +81,7 @@
   background-color: #ff3640;
 }
 
-.dashboard table tr td:nth-child(2).active:before {
+.dashboard.novel table tr td:nth-child(2).active:before {
   background-color: #4fa837;
 }
 
