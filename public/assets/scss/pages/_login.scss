@@ -4,17 +4,14 @@
   align-items: center;
   padding: 150px 40px 40px;
 }
-
 .form__container {
   width: 100%;
   max-width: 450px;
 }
-
 .login__form {
   margin-top: 25px;
   width: 100%;
 }
-
 .login__form__input{
   display: block;
   font-family: 'Montserrat', sans-serif;
@@ -29,11 +26,9 @@
   box-shadow: none;
   transition: box-shadow .3s;
 }
-
 .login__form__input:focus{
   box-shadow: 9px 9px 16px rgb(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
 }
-
 .login__form .btn {
   text-align: center;
 }

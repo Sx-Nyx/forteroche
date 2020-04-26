@@ -12,7 +12,7 @@
 <header class="header">
     <a href="/admin" class="header__logo">Jean-Forteroche.</a>
     <nav class="header__nav header__nav-admin">
-        <a href="/admin">Le romans</a>
+        <a href="/admin">Le roman</a>
         <a href="/admin/comments">Les commentaires <span class="header__notification">3</span></a>
     </nav>
 </header>

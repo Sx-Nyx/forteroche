@@ -1,4 +1,4 @@
-.dashboard, .header, .wrapper {
+.dashboard, .header, .wrapper, .container {
   width: calc(100% - 40px);
   max-width: 1140px;
   margin-right: auto;
@@ -440,6 +440,19 @@ body {
   .dashboard .actions .btn:nth-child(even) {
     margin-top: 20px;
   }
+}
+.form__container {
+  margin: 24px auto 24px auto;
+}
+
+.novel__form {
+  margin-top: 25px;
+  width: 100%;
+}
+
+textarea.login__form__input {
+  max-width: 100%;
+  min-height: 150px;
 }
 
 /*# sourceMappingURL=main.css.map */
