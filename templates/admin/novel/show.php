@@ -4,7 +4,7 @@
         <form class="novel__form">
             <input type="text" placeholder="Nom du roman" required class="login__form__input">
             <textarea placeholder="Description du roman" required class="login__form__input"></textarea>
-            <div class="btn">
+            <div class="btn btn--novel">
                 <button type="submit" class="btn__link">Modifier</button>
             </div>
         </form>

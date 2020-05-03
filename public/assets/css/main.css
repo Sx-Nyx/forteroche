@@ -344,6 +344,50 @@ body {
   text-align: center;
 }
 
+.book__presentation--center {
+  flex: 100%;
+  text-align: center;
+}
+
+.chapter__card {
+  display: block;
+  max-width: 350px;
+  padding-top: 16px;
+  border-bottom: 1px solid rgba(203, 202, 202, 0.5);
+}
+
+.chapter__card:nth-child(even) {
+  margin-left: auto;
+  text-align: right;
+}
+
+.chapter__card:nth-child(even) .chapter__comment {
+  text-align: left;
+}
+
+.chapter__title {
+  font-weight: 700;
+  font-size: 1.03rem;
+  margin-bottom: 8px;
+}
+
+.chapter__excerpt {
+  margin-bottom: 4px;
+}
+
+.chapter__comment {
+  display: block;
+  text-align: right;
+  margin-bottom: 8px;
+  color: #cbcaca;
+}
+
+@media only screen and (min-width: 750px) {
+  .chapter__card {
+    max-width: 700px;
+    padding-top: 24px;
+  }
+}
 .dashboard {
   margin-top: 24px;
   display: flex;
