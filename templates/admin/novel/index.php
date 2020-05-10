@@ -24,7 +24,8 @@
                     <svg class="dashboard__icon">
                         <use xlink:href="assets/images/sprite.svg#edit"></use>
                     </svg>
-                </a> <a href="#" class="dashboard__actions" title="Supprimer">
+                </a>
+                <a href="#" class="dashboard__actions" title="Supprimer">
                     <svg class="dashboard__icon dashboard__icon-red">
                         <use xlink:href="assets/images/sprite.svg#delete"></use>
                     </svg>
@@ -39,7 +40,8 @@
                     <svg class="dashboard__icon">
                         <use xlink:href="assets/images/sprite.svg#edit"></use>
                     </svg>
-                </a> <a href="#" class="dashboard__actions">
+                </a>
+                <a href="#" class="dashboard__actions">
                     <svg class="dashboard__icon dashboard__icon-red">
                         <use xlink:href="assets/images/sprite.svg#delete"></use>
                     </svg>
