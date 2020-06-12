@@ -1,6 +1,11 @@
 <?php
 
+use Framework\Routing\Router;
+
 require "../vendor/autoload.php";
 
-$renderer = new \Framework\Rendering\Renderer("../templates/base.php");
-$renderer->render("../templates/novel/show.php");
+const CONTROLLER_NAMESPACE = "App\Controller\\";
+
+$router = new Router('templates\notfound.php');
+$router->get('/', "App\Controller\HomeController::index");
+$router->listen();
