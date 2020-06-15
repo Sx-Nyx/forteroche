@@ -1,0 +1,8 @@
+CREATE TABLE novel (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) NOT NULL,
+    description MEDIUMTEXT NOT NULL,
+    created_at DATETIME NOT NULL,
+    PRIMARY KEY (id)
+);

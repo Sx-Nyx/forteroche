@@ -1,8 +1,8 @@
 <div class="wrapper">
     <div class="book">
         <div class="book__presentation">
-            <h1 class="book__presentation-title">Un billet simple pour L'Alaska.</h1>
-            <p class="book__presentation-description">La description est ce qui donne corps aux lieux, aux personnages, aux sentiments, à l'élément abstrait. Sans elle, un récit ne serait qu'une succession de faits, froide et répétitive.”</p>
+            <h1 class="book__presentation-title"><?= $novel->getTitle() ?></h1>
+            <p class="book__presentation-description"><?= $novel->getDescription() ?></p>
             <div class="btn">
                 <a href="#" class="btn__link">Découvrir</a>
             </div>
