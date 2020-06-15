@@ -2,6 +2,8 @@
 
 namespace Framework\Routing;
 
+use Framework\Routing\Exception\RouteNotFoundException;
+
 class Router
 {
     /**
@@ -42,7 +44,7 @@ class Router
      *      ]
      * @return $this
      */
-    public function __call($method, $args = []):self
+    public function __call($method, $args = []): self
     {
         if (in_array(strtoupper($method), $this->methods)) {
             $name = !empty($args[2]) ? $args[2] : null;
@@ -50,6 +52,27 @@ class Router
             return $this;
         }
         throw new \BadMethodCallException("Invalid method \"$method\".");
+    }
+
+    /**
+     * @param string $routeName
+     * @param array $params
+     * @return string
+     * @throws RouteNotFoundException
+     */
+    public function generateUrl(string $routeName, array $params = []): string
+    {
+        if (!isset($this->name[$routeName])) {
+            throw new RouteNotFoundException("Route '{$routeName}' does not exist.");
+        }
+        $generateUrl = $this->name[$routeName]->path;
+
+        foreach ($params as $key => $value) {
+            if (array_key_exists($key, $params)) {
+                $generateUrl = str_replace($this->name[$routeName]->parameters[':' . $key], $value, $generateUrl);
+            }
+        }
+        return $generateUrl;
     }
 
     /**

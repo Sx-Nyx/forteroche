@@ -9,7 +9,7 @@ class Route
     /**
      * @var string
      */
-    private $path;
+    public $path;
 
     /**
      * @var string
@@ -19,7 +19,7 @@ class Route
     /**
      * @var array
      */
-    private $parameters = [
+    public $parameters = [
         ':id'   => '([0-9]+)',
         ':slug'  => '([a-z0-9\-]+)',
     ];
