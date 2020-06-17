@@ -82,7 +82,7 @@ class Router
     {
         foreach ($this->routes[$this->getRequestMethod()] as $route) {
             if ($route->routeMatch($this->getRequestUri())) {
-                return $route->dispatch();
+                return $route->dispatch($this);
             }
         }
         return $this->generate404();
@@ -95,7 +95,7 @@ class Router
      * @param string|null $name
      * @return Route
      */
-    private function registerRoute(string $method, string $path, string $callable, ?string $name): Route
+    private function registerRoute(string $method, string $path, $callable, ?string $name): Route
     {
         $route = new Route($path, $callable);
         $this->routes[$method][] = $route;
@@ -124,7 +124,7 @@ class Router
     /**
      * @return string
      */
-    private function generate404()
+    private function generate404(): string
     {
         http_response_code(404);
         include $this->notFound;

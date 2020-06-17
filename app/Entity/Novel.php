@@ -20,6 +20,11 @@ class Novel
     private $description;
 
     /**
+     * @var string
+     */
+    private $slug;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -41,5 +46,10 @@ class Novel
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function getSlug():string
+    {
+        return $this->slug;
     }
 }

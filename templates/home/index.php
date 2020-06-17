@@ -4,7 +4,7 @@
             <h1 class="book__presentation-title"><?= $novel->getTitle() ?></h1>
             <p class="book__presentation-description"><?= $novel->getDescription() ?></p>
             <div class="btn">
-                <a href="#" class="btn__link">Découvrir</a>
+                <a href="<?= $router->generateUrl('novel.index', ['slug' => $novel->getSlug()]) ?>" class="btn__link">Découvrir</a>
             </div>
         </div>
         <div class="book__img">

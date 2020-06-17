@@ -4,9 +4,10 @@ use Framework\Routing\Router;
 
 require "../vendor/autoload.php";
 
-const CONTROLLER_NAMESPACE = "App\Controller\\";
+const NAMESPACE_CONTROLLER = 'App\Controller\\';
 
-$router = new Router('templates\notfound.php');
-$router->get('/', CONTROLLER_NAMESPACE . "HomeController::index", 'home');
-$router->listen();
+$router = (new Router('templates\notfound.php'))
+        ->get('/', NAMESPACE_CONTROLLER . 'HomeController::index', 'home')
+        ->get('/:slug', NAMESPACE_CONTROLLER . 'NovelController::index', 'novel.index')
+        ->listen();
 

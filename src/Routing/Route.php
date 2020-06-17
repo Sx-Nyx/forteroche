@@ -60,17 +60,22 @@ class Route
     }
 
     /**
+     * @param Router $router
      * @param callable|string|null $action
      * @return mixed
      * @throws RouteCallbackException
      */
-    public function dispatch($action = null)
+    public function dispatch(Router $router, $action = null)
     {
-        $action = !is_null($action) ? $action : $this->callable;
+        $params = [
+            'router'        => $router,
+            'parameters'    => $this->matched_parameters
+        ];
 
+        $action = !is_null($action) ? $action : $this->callable;
         if (is_callable($action))
         {
-            return call_user_func_array($action, $this->matched_parameters);
+            return call_user_func_array($action, $params);
         }
         $call       = explode('::', $action);
         $className  = $call[0];
@@ -84,7 +89,7 @@ class Route
                 return call_user_func_array([
                     $class,
                     $methodName
-                ], $this->matched_parameters);
+                ], $params);
             }
         }
         throw new RouteCallbackException("Unable to dispatch router action.");
