@@ -2,7 +2,7 @@
 
 use Framework\Database\Connection;
 
-require "../vendor/autoload.php";
+require dirname(__DIR__) . '/vendor/autoload.php';
 
 $pdo = Connection::getPDO();
 $pdo->exec('TRUNCATE TABLE novel');

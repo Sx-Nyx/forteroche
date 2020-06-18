@@ -22,4 +22,12 @@ class NovelRepository
         $query = $this->PDO->query('SELECT * FROM novel ORDER BY created_at DESC LIMIT 1', PDO::FETCH_CLASS, Novel::class);
         return $query->fetch();
     }
+
+    public function findBy(string $slug)
+    {
+        $query = $this->PDO->prepare('SELECT * FROM novel WHERE slug = :slug');
+        $query->execute(['slug' => $slug]);
+        $query->setFetchMode(\PDO::FETCH_CLASS, Novel::class);
+        return $query->fetch();
+    }
 }
