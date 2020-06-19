@@ -5,7 +5,9 @@
     </div>
     <div class="chapter__list">
     <?php foreach($chapters as $chapter): ?>
-        <a class="chapter__card" href="#">
+        <a class="chapter__card" href="<?= $router->generateUrl('novel.show', [
+                    'novelSlug' => $novel->getSlug(),
+                    'chapterSlug' => $chapter->getSlug()]) ?>">
             <h1 class="chapter__title light__title"><?= $chapter->getTitle() ?></h1>
             <p class="chapter__excerpt"><?= $chapter->getContent() ?></p>
             <span class="chapter__comment">Commentaires: <?= $chapter->getNumberComment() ?></span>

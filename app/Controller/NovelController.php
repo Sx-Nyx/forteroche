@@ -10,16 +10,30 @@ use Framework\Routing\Router;
 
 class NovelController
 {
-    public static function index(Router $router, array $slug)
+    public static function index(Router $router, array $parameters)
     {
-        $novel = (new NovelRepository(Connection::getPDO()))->findBy($slug[0]);
-        $chapters = (new ChapterRepository(Connection::getPDO()))->findAndCount($novel->getId());
+        $pdo = Connection::getPDO();
+
+        $novel = (new NovelRepository($pdo))->findBy($parameters[0]);
+        $chapters = (new ChapterRepository($pdo))->findAndCount($novel->getId());
 
         $renderer = new Renderer("../templates/base.php");
         $renderer->render("../templates/novel/index.php", [
             'router'    => $router,
             'novel'     => $novel,
             'chapters'  => $chapters
+        ]);
+    }
+
+    public static function show(Router $router, array $parameters)
+    {
+        $pdo = Connection::getPDO();
+
+        $chapter = (new ChapterRepository($pdo))->find($parameters[1]);
+
+        $renderer = new Renderer("../templates/base.php");
+        $renderer->render("../templates/novel/show.php", [
+            'chapter'   => $chapter
         ]);
     }
 }

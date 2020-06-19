@@ -30,6 +30,11 @@ class Chapter
     private $numberComment;
 
     /**
+     * @var []Comment
+     */
+    private $comments;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -53,18 +58,43 @@ class Chapter
         return $this->content;
     }
 
+    /**
+     * @return string
+     */
     public function getSlug():string
     {
         return $this->slug;
     }
 
+    /**
+     * @return int
+     */
     public function getNumberComment():int
     {
         return $this->numberComment;
     }
 
+    /**
+     * @return array
+     */
+    public function getComments(): array
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param int $numberComment
+     */
     public function setNumberComment(int $numberComment)
     {
         $this->numberComment = $numberComment;
+    }
+
+    /**
+     * @param array $comments
+     */
+    public function setComments(array $comments): void
+    {
+        $this->comments = $comments;
     }
 }

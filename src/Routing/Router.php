@@ -66,10 +66,9 @@ class Router
             throw new RouteNotFoundException("Route '{$routeName}' does not exist.");
         }
         $generateUrl = $this->name[$routeName]->path;
-
         foreach ($params as $key => $value) {
             if (array_key_exists($key, $params)) {
-                $generateUrl = str_replace($this->name[$routeName]->parameters[':' . $key], $value, $generateUrl);
+                $generateUrl = $this->str_replace_first($this->name[$routeName]->parameters[':' . $key], $value, $generateUrl);
             }
         }
         return $generateUrl;
@@ -130,4 +129,11 @@ class Router
         include $this->notFound;
         die();
     }
+
+    private function str_replace_first(string $from, string $to, string $content):string
+    {
+        $from = '/' . preg_quote($from, '/') . '/';
+        return preg_replace($from, $to, $content, 1);
+    }
+
 }

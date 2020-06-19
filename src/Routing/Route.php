@@ -22,6 +22,8 @@ class Route
     public $parameters = [
         ':id'   => '([0-9]+)',
         ':slug'  => '([a-z0-9\-]+)',
+        ':novelSlug'  => '([a-z0-9\-]+)',
+        ':chapterSlug'  => '([a-z0-9\-]+)',
     ];
 
     /**

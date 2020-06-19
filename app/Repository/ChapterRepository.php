@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Chapter;
+use App\Entity\Comment;
 use PDO;
 
 class ChapterRepository
@@ -15,6 +16,24 @@ class ChapterRepository
     public function __construct(\PDO $PDO)
     {
         $this->PDO = $PDO;
+    }
+
+    /**
+     * @param string $slug
+     * @return Chapter
+     */
+    public function find(string $slug): Chapter
+    {
+        $queryChapter = $this->PDO->prepare("SELECT * FROM chapter WHERE slug = :slug");
+        $queryChapter->execute(['slug' => $slug]);
+        $queryChapter->setFetchMode(\PDO::FETCH_CLASS, Chapter::class);
+        $chapter = $queryChapter->fetch();
+
+        $queryComment = $this->PDO->query("SELECT * FROM comment WHERE chapter_id = {$chapter->getId()} ORDER BY created_at");
+        $comments = $queryComment->fetchAll(PDO::FETCH_CLASS, Comment::class);
+
+        $chapter->setComments($comments);
+        return $chapter;
     }
 
     /**
