@@ -33,7 +33,10 @@ class NovelController
 
         $renderer = new Renderer("../templates/base.php");
         $renderer->render("../templates/novel/show.php", [
-            'chapter'   => $chapter
+            'novelSlug'    => $parameters[0],
+            'chapterSlug'    => $parameters[1],
+            'chapter'       => $chapter,
+            'router'        => $router
         ]);
     }
 }

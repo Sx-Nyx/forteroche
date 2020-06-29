@@ -51,7 +51,7 @@ class ChapterRepository
      * @param int $novelId
      * @return array
      */
-    public function findAndCount(int $novelId):array
+    public function findAndCount(int $novelId): array
     {
         $chapters = $this->findAllBy($novelId);
         foreach ($chapters as $chapter) {

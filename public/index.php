@@ -10,5 +10,5 @@ $router = (new Router('templates\notfound.php'))
         ->get('/', NAMESPACE_CONTROLLER . 'HomeController::index', 'home')
         ->get('/:slug', NAMESPACE_CONTROLLER . 'NovelController::index', 'novel.index')
         ->get('/:novelSlug/:chapterSlug', NAMESPACE_CONTROLLER . 'NovelController::show', 'novel.show')
+        ->post('/:novelSlug/:chapterSlug', NAMESPACE_CONTROLLER . 'CommentController::new', 'comment.new')
         ->listen();
-

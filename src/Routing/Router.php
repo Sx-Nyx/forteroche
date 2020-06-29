@@ -130,7 +130,7 @@ class Router
         die();
     }
 
-    private function str_replace_first(string $from, string $to, string $content):string
+    private function str_replace_first(string $from, string $to, string $content): string
     {
         $from = '/' . preg_quote($from, '/') . '/';
         return preg_replace($from, $to, $content, 1);
