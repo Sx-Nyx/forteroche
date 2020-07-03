@@ -38,4 +38,20 @@ class CommentRepository
             throw new \Exception("Impossible de créer le commentaire");
         }
     }
+
+    public function find(int $id)
+    {
+        $query = $this->PDO->prepare('SELECT * FROM comment WHERE id = :id');
+        $query->execute(['id' => $id]);
+        $query->setFetchMode(\PDO::FETCH_CLASS, Comment::class);
+        return $query->fetch();
+    }
+
+    public function report(int $id)
+    {
+        $comment = $this->find($id);
+        $comment->setReported($comment->getReported() + 1);
+        $query = $this->PDO->query("UPDATE comment SET reported={$comment->getReported()} WHERE id={$id}");
+        $query->execute();
+    }
 }

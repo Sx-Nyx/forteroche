@@ -29,6 +29,11 @@ class Comment extends EntityManager
     private $chapter_id;
 
     /**
+     * @var int $reported
+     */
+    private $reported;
+
+    /**
      * @var \DateTime $created_at
      */
     private $created_at;
@@ -76,6 +81,14 @@ class Comment extends EntityManager
     }
 
     /**
+     * @return int
+     */
+    public function getReported(): int
+    {
+        return $this->reported;
+    }
+
+    /**
      * @return DateTime
      * @throws \Exception
      */
@@ -116,6 +129,16 @@ class Comment extends EntityManager
     public function setChapterId(int $chapter_id): self
     {
         $this->chapter_id = $chapter_id;
+        return $this;
+    }
+
+    /**
+     * @param int $nbReport
+     * @return $this
+     */
+    public function setReported(int $nbReport): self
+    {
+        $this->reported = $nbReport;
         return $this;
     }
 

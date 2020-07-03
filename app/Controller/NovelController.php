@@ -21,6 +21,7 @@ class NovelController
         $renderer->render("../templates/novel/index.php", [
             'router'    => $router,
             'novel'     => $novel,
+            'novelSlug' => $novel->getSlug(),
             'chapters'  => $chapters
         ]);
     }

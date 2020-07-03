@@ -14,7 +14,8 @@ class HomeController
         $novel = (new NovelRepository(Connection::getPDO()))->findLatest();
         $renderer = new Renderer("../templates/base.php");
         $renderer->render("../templates/home/index.php", [
-            'novel' => $novel,
+            'novel'     => $novel,
+            'novelSlug' => $novel->getSlug(),
             'router' => $router
         ]);
     }

@@ -71,7 +71,7 @@ class Router
                 $generateUrl = $this->str_replace_first($this->name[$routeName]->parameters[':' . $key], $value, $generateUrl);
             }
         }
-        return $generateUrl;
+        return '/' . $generateUrl;
     }
 
     /**
@@ -115,7 +115,7 @@ class Router
     /**
      * @return string
      */
-    private function getRequestUri(): string
+    public function getRequestUri(): string
     {
         return trim($_SERVER['REQUEST_URI'], '/');
     }

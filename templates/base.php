@@ -12,8 +12,8 @@
 <header class="header">
     <a href="/" class="header__logo">Jean-Forteroche.</a>
     <nav class="header__nav">
-        <a href="#">Accueil</a>
-        <a href="#">Le roman</a>
+        <a href="/">Accueil</a>
+        <a href="<?= $router->generateUrl('novel.index', ['slug' => $novelSlug]) ?>">Le roman</a>
     </nav>
 </header>
 <?= $content ?>
