@@ -26,6 +26,7 @@ class CommentRepository
         $data = [
             'author'        => $comment->getAuthor(),
             'content'       => $comment->getContent(),
+            'reported'      => $comment->getReported(),
             'chapter_id'    => $comment->getChapterId(),
             'created_at'    => $comment->getCreatedAt()->format('Y-m-d H:i:s')
         ];
