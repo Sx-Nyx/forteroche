@@ -10,7 +10,11 @@
         "psr-4": {
             "Framework\\": "src",
             "App\\": "app"
-        }
+        },
+      "files": [
+          "./env.php",
+          "./src/Helper/envLoader.php"
+      ]
     },
     "require": {
       "ext-pdo": "*",

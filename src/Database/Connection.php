@@ -11,7 +11,7 @@ class Connection
      */
     public static function getPDO (): PDO
     {
-        return new PDO('mysql:dbname=forteroche;host=127.0.0.1', 'root', 'root', [
+        return new PDO("mysql:dbname=" . env('DB_NAME') . ";host=" . env('DB_HOST'), env('DB_USERNAME'), env('DB_PASSWORD'), [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ]);
     }
