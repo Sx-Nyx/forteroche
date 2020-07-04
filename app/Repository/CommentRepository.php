@@ -3,22 +3,29 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use Exception;
+use Framework\Database\AbstractRepository;
+use PDO;
 
-class CommentRepository
+class CommentRepository extends AbstractRepository
 {
     /**
-     * @var \PDO
+     * @var PDO
      */
-    private $PDO;
+    protected $PDO;
 
-    public function __construct(\PDO $PDO)
+    protected $table = 'comment';
+
+    protected $entity = Comment::class;
+
+    public function __construct(PDO $PDO)
     {
-        $this->PDO = $PDO;
+        parent::__construct($PDO);
     }
 
     /**
      * @param Comment $comment
-     * @throws \Exception
+     * @throws Exception
      */
     public function create(Comment $comment)
     {
@@ -40,17 +47,9 @@ class CommentRepository
         }
     }
 
-    public function find(int $id)
-    {
-        $query = $this->PDO->prepare('SELECT * FROM comment WHERE id = :id');
-        $query->execute(['id' => $id]);
-        $query->setFetchMode(\PDO::FETCH_CLASS, Comment::class);
-        return $query->fetch();
-    }
-
     public function report(int $id)
     {
-        $comment = $this->find($id);
+        $comment = $this->findBy('id', $id);
         $comment->setReported($comment->getReported() + 1);
         $query = $this->PDO->query("UPDATE comment SET reported={$comment->getReported()} WHERE id={$id}");
         $query->execute();

@@ -14,7 +14,7 @@ class NovelController
     {
         $pdo = Connection::getPDO();
 
-        $novel = (new NovelRepository($pdo))->findBy($parameters[0]);
+        $novel = (new NovelRepository($pdo))->findBy('slug' , $parameters[0]);
         $chapters = (new ChapterRepository($pdo))->findAndCount($novel->getId());
 
         $renderer = new Renderer("../templates/base.php");
@@ -30,7 +30,7 @@ class NovelController
     {
         $pdo = Connection::getPDO();
 
-        $chapter = (new ChapterRepository($pdo))->find($parameters[1]);
+        $chapter = (new ChapterRepository($pdo))->findWithComment($parameters[1]);
 
         $renderer = new Renderer("../templates/base.php");
         $renderer->render("../templates/novel/show.php", [

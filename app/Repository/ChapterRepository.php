@@ -4,35 +4,40 @@ namespace App\Repository;
 
 use App\Entity\Chapter;
 use App\Entity\Comment;
+use Framework\Database\AbstractRepository;
+use Framework\Database\Exception\NotFoundException;
 use PDO;
 
-class ChapterRepository
+class ChapterRepository extends AbstractRepository
 {
     /**
      * @var \PDO
      */
-    private $PDO;
+    protected $PDO;
 
-    public function __construct(\PDO $PDO)
+    protected $table = 'chapter';
+
+    protected $entity = Chapter::class;
+
+    public function __construct(PDO $PDO)
     {
-        $this->PDO = $PDO;
+        parent::__construct($PDO);
     }
 
     /**
      * @param string $slug
      * @return Chapter
+     * @throws NotFoundException
      */
-    public function find(string $slug): Chapter
+    public function findWithComment(string $slug): Chapter
     {
-        $queryChapter = $this->PDO->prepare("SELECT * FROM chapter WHERE slug = :slug");
-        $queryChapter->execute(['slug' => $slug]);
-        $queryChapter->setFetchMode(\PDO::FETCH_CLASS, Chapter::class);
-        $chapter = $queryChapter->fetch();
+        $chapter = $this->findBy('slug', $slug);
 
         $queryComment = $this->PDO->query("SELECT * FROM comment WHERE chapter_id = {$chapter->getId()} ORDER BY created_at");
         $comments = $queryComment->fetchAll(PDO::FETCH_CLASS, Comment::class);
 
         $chapter->setComments($comments);
+
         return $chapter;
     }
 
