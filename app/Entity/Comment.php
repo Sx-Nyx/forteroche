@@ -69,7 +69,7 @@ class Comment extends EntityManager
      */
     public function getContent(): string
     {
-        return $this->content;
+        return nl2br(htmlentities($this->content));
     }
 
     /**

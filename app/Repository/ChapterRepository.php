@@ -33,7 +33,7 @@ class ChapterRepository extends AbstractRepository
     {
         $chapter = $this->findBy('slug', $slug);
 
-        $queryComment = $this->PDO->query("SELECT * FROM comment WHERE chapter_id = {$chapter->getId()} ORDER BY created_at");
+        $queryComment = $this->PDO->query("SELECT * FROM comment WHERE chapter_id = {$chapter->getId()} ORDER BY created_at DESC");
         $comments = $queryComment->fetchAll(PDO::FETCH_CLASS, Comment::class);
 
         $chapter->setComments($comments);

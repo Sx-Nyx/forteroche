@@ -18,7 +18,7 @@ class CommentController
     public static function new(Router $router, array $parameters)
     {
         if (!empty($_POST)) {
-            $chapter = (new ChapterRepository(Connection::getPDO()))->findBy('id', $parameters[1]);
+            $chapter = (new ChapterRepository(Connection::getPDO()))->findBy('slug', $parameters[1]);
             $comment = (new Comment(new Validator($_POST)))
                 ->setAuthor($_POST['pseudo'])
                 ->setContent($_POST['commentaire'])
