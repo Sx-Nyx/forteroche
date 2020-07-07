@@ -16,6 +16,7 @@ CREATE TABLE chapter (
         REFERENCES novel(id)
         ON DELETE CASCADE,
     content LONGTEXT NOT NULL,
+    status BOOLEAN NOT NULL DEFAULT FALSE,
     created_at DATETIME NOT NULL,
     PRIMARY KEY (id)
 );

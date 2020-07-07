@@ -35,6 +35,11 @@ class Chapter
     private $comments;
 
     /**
+     * @var bool
+     */
+    private $status;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -83,18 +88,40 @@ class Chapter
     }
 
     /**
-     * @param int $numberComment
+     * @return bool
      */
-    public function setNumberComment(int $numberComment)
+    public function getStatus():bool
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param int $numberComment
+     * @return Chapter
+     */
+    public function setNumberComment(int $numberComment):self
     {
         $this->numberComment = $numberComment;
+        return $this;
     }
 
     /**
      * @param array $comments
+     * @return Chapter
      */
-    public function setComments(array $comments): void
+    public function setComments(array $comments):self
     {
         $this->comments = $comments;
+        return $this;
+    }
+
+    /**
+     * @param bool $status
+     * @return $this
+     */
+    public function setStatus(bool $status = false):self
+    {
+        $this->status = $status;
+        return $this;
     }
 }

@@ -28,9 +28,7 @@ class NovelController
 
     public static function show(Router $router, array $parameters)
     {
-        $pdo = Connection::getPDO();
-
-        $chapter = (new ChapterRepository($pdo))->findWithComment($parameters[1]);
+        $chapter = (new ChapterRepository(Connection::getPDO()))->findWithComment($parameters[1]);
 
         $renderer = new Renderer("../templates/base.php");
         $renderer->render("../templates/novel/show.php", [
