@@ -67,7 +67,7 @@ class Validator
     public function required(string $key, string $message): self
     {
         $value = $this->getValue($key);
-        if (is_null($value)) {
+        if (is_null($value) || empty($value) ) {
             $this->setErrors($key, $message);
         }
         return $this;
