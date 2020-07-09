@@ -2,6 +2,7 @@
 
 namespace Framework\Database;
 
+use Exception;
 use Framework\Database\Exception\NotFoundException;
 use PDO;
 
@@ -36,5 +37,24 @@ abstract class AbstractRepository
             throw new NotFoundException($this->table, $field, $data);
         }
         return $response;
+    }
+
+    /**
+     * @param array $data
+     * @param int $id
+     * @throws Exception
+     */
+    public function update(array $data, int $id)
+    {
+        $fields = [];
+        foreach ($data as $key => $value) {
+            $fields[] = "$key = :$key";
+        }
+        $query = $this->PDO->prepare("UPDATE {$this->table} SET " . implode(', ', $fields) . " WHERE id = :id");
+        $response = $query->execute(array_merge($data, ['id' => $id]));
+
+        if ($response === false) {
+            throw new Exception("Impossible de modifier l'enregistrement dans la table {$this->table}");
+        }
     }
 }
