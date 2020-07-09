@@ -101,6 +101,24 @@ class Validator
     }
 
     /**
+     * @param string $key
+     * @param string $table
+     * @param string $message
+     * @return $this
+     */
+    public function exists(string $key, string $table, string $message): self
+    {
+        $value = $this->getValue($key);
+        $statement = $this->PDO->prepare("SELECT id FROM $table WHERE id = ?");
+        $statement->execute([$value]);
+        if ($statement->fetchColumn() === false) {
+            $this->setErrors($key, $message);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function getErrors(): array
