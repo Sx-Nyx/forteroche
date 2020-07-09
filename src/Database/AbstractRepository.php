@@ -57,4 +57,24 @@ abstract class AbstractRepository
             throw new Exception("Impossible de modifier l'enregistrement dans la table {$this->table}");
         }
     }
+
+    /**
+     * @param array $data
+     * @return int
+     * @throws Exception
+     */
+    public function create (array $data): int
+    {
+        $fields = [];
+        foreach ($data as $key => $value) {
+            $fields[] = "$key = :$key";
+        }
+        $query = $this->PDO->prepare("INSERT INTO {$this->table} SET " . implode(', ', $fields));
+        $response = $query->execute($data);
+
+        if ($response === false) {
+            throw new \Exception("Impossible de créer l'enregistrement dans la table {$this->table}");
+        }
+        return (int)$this->PDO->lastInsertId();
+    }
 }
