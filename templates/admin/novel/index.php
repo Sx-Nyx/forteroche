@@ -1,8 +1,8 @@
 <div class="dashboard novel">
     <div class="actions">
         <div class="btn">
-            <a href="<?= $router->generateUrl('admin.novel.edit', ['slug' => $novel->getSlug()]) ?>" class="btn__link">Modifier
-                la description</a>
+            <a href="<?= $router->generateUrl('admin.novel.show', ['slug' => $novel->getSlug(), 'id' => $novel->getId()]) ?>" class="btn__link">Modifier
+                le roman</a>
         </div>
         <div class="btn">
             <a href="<?= $router->generateUrl('admin.chapter.new', ['slug' => $novel->getSlug()]) ?>" class="btn__link">Ajouter

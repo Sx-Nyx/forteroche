@@ -8,8 +8,11 @@ const NAMESPACE_CONTROLLER = 'App\Controller\\';
 
 $router = (new Router('templates\notfound.php'))
     ->get('/admin', NAMESPACE_CONTROLLER . 'Admin\NovelController::index', 'admin.novel')
-    ->get('/admin/:slug', NAMESPACE_CONTROLLER . 'Admin\NovelController::edit', 'admin.novel.edit')
+    ->get('/admin/:slug/:id', NAMESPACE_CONTROLLER . 'Admin\NovelController::show', 'admin.novel.show')
+    ->post('/admin/:slug/:id', NAMESPACE_CONTROLLER . 'Admin\NovelController::edit', 'admin.novel.edit')
+
     ->get('/admin/:slug/chapter/new', NAMESPACE_CONTROLLER . 'Admin\ChapterController::new', 'admin.chapter.new')
+    ->post('/admin/:slug/chapter/new', NAMESPACE_CONTROLLER . 'Admin\ChapterController::new', 'admin.chapter.new')
     ->get('/admin/:slug/chapter/edit/:id', NAMESPACE_CONTROLLER . 'Admin\ChapterController::new', 'admin.chapter.edit')
 
     ->get('/', NAMESPACE_CONTROLLER . 'HomeController::index', 'home')

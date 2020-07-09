@@ -1,20 +1,16 @@
 <?php
-
 use Framework\Session\FlashMessage;
 use Framework\Session\Session;
-
 ?>
 <div class="wrapper">
     <div class="book__reading">
         <h1 class="book__presentation-title"><?= $chapter->getTitle() ?></h1>
         <?= $chapter->getContent() ?>
     </div>
-
     <form class="comment__form" method="post" action="<?= $router->generateUrl('comment.new', ['novelSlug' => $novelSlug, 'chapterSlug' => $chapter->getSlug()])?>">
         <?php if (FlashMessage::get('success')): ?>
             <p><?= FlashMessage::get('success') ?></p>
         <?php endif; ?>
-
         <?php if (FlashMessage::get('errors')): ?>
             <?php $field = ''; ?>
             <?php foreach (FlashMessage::get('errors') as $key => $error): ?>
