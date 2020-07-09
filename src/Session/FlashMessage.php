@@ -22,10 +22,15 @@ class FlashMessage
 
     /**
      * @param string $type
-     * @return bool|mixed
+     * @return string|null
      */
-    public static function get(string $type)
+    public static function get(string $type): ?string
     {
-        return Session::get($type);
+        if (Session::get($type)) {
+            $session = Session::get($type);
+            Session::delete($type);
+            return $session;
+        }
+        return null;
     }
 }

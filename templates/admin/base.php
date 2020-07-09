@@ -1,3 +1,6 @@
+<?php
+use Framework\Session\FlashMessage;
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -16,6 +19,10 @@
         <a href="/admin/comments">Les commentaires <span class="header__notification">3</span></a>
     </nav>
 </header>
+
+<p><?= FlashMessage::get('success') ?></p>
+
 <?= $content ?>
+
 </body>
 </html>
