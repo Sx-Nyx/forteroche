@@ -66,4 +66,17 @@ class ChapterRepository extends AbstractRepository
         }
         return $chapters;
     }
+
+    public function createChapter(Chapter $chapter): void
+    {
+        $id = $this->create([
+            'title'         => $chapter->getTitle(),
+            'content'       => $chapter->getContent(),
+            'slug'          => $chapter->getSlug(),
+            'novel_id'      => $chapter->getNovelId(),
+            'status'        => $chapter->getStatus(),
+            'created_at'    => $chapter->getCreatedAt()->format('Y-m-d H:i:s')
+        ]);
+        $chapter->setId($id);
+    }
 }
