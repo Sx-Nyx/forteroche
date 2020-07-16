@@ -13,7 +13,8 @@ $router = (new Router('templates\notfound.php'))
 
     ->get('/admin/:slug/chapter/new', NAMESPACE_CONTROLLER . 'Admin\ChapterController::new', 'admin.chapter.new')
     ->post('/admin/:slug/chapter/new', NAMESPACE_CONTROLLER . 'Admin\ChapterController::new', 'admin.chapter.new')
-    ->get('/admin/:slug/chapter/edit/:id', NAMESPACE_CONTROLLER . 'Admin\ChapterController::new', 'admin.chapter.edit')
+    ->get('/admin/:slug/chapter/edit/:id', NAMESPACE_CONTROLLER . 'Admin\ChapterController::edit', 'admin.chapter.edit')
+    ->post('/admin/:slug/chapter/edit/:id', NAMESPACE_CONTROLLER . 'Admin\ChapterController::edit', 'admin.chapter.edit')
 
     ->get('/', NAMESPACE_CONTROLLER . 'HomeController::index', 'home')
     ->get('/:slug', NAMESPACE_CONTROLLER . 'NovelController::index', 'novel.index')

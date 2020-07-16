@@ -65,25 +65,25 @@ class Chapter extends EntityManager
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return $this->content;
     }
@@ -94,9 +94,9 @@ class Chapter extends EntityManager
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSlug():string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -118,9 +118,9 @@ class Chapter extends EntityManager
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getStatus():int
+    public function getStatus(): ?int
     {
         return $this->status;
     }
@@ -146,13 +146,15 @@ class Chapter extends EntityManager
 
     /**
      * @param string $title
+     * @param int $id
      * @return $this
      */
-    public function setTitle(string $title): self
+    public function setTitle(string $title, int $id): self
     {
         $this->errors = $this->validator->required('titre', 'Est requis.')
-                                        ->unique('chapter', 'title', 'titre', 'Doit être unique.')
+                                        ->unique('chapter', 'title', 'titre', 'Doit être unique.', $id)
                                         ->getErrors();
+
         $this->title = $title;
         return $this;
     }

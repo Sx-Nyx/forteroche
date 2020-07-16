@@ -85,7 +85,7 @@ class Novel extends EntityManager
     public function setTitle(string $title, int $id):self
     {
         $this->errors = $this->validator->required('titre', 'Est requis.')
-                                        ->unique('novel', 'title', 'titre', 'Doit être unique.')
+                                        ->unique('novel', 'title', 'titre', 'Doit être unique.', $id)
                                         ->getErrors();
         $this->title = $title;
         return $this;

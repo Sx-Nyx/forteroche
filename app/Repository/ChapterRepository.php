@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Chapter;
 use App\Entity\Comment;
+use App\Entity\Novel;
 use Framework\Database\AbstractRepository;
 use Framework\Database\Exception\NotFoundException;
 use PDO;
@@ -65,6 +66,16 @@ class ChapterRepository extends AbstractRepository
             $chapter->setNumberComment($comment);
         }
         return $chapters;
+    }
+
+    public function updateChapter(Chapter $chapter): void
+    {
+        $this->update([
+            'title'         => $chapter->getTitle(),
+            'content'       => $chapter->getContent(),
+            'status'        => $chapter->getStatus(),
+            'slug'          => $chapter->getSlug(),
+        ], $chapter->getId());
     }
 
     public function createChapter(Chapter $chapter): void

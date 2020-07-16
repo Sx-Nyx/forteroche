@@ -49,11 +49,47 @@ class ChapterController
                 ]);
             }
         } else {
+            $chapter = new Chapter();
             $renderer = new Renderer("../templates/admin/base.php");
             $renderer->render("../templates/admin/chapter/new.php", [
                 'router'    => $router,
-                'novel'     => $novel
+                'novel'     => $novel,
+                'chapter'   => $chapter
             ]);
         }
+    }
+
+    public static function edit(Router $router, array $parameters)
+    {
+        $pdo = Connection::getPDO();
+        $chapter = (new ChapterRepository($pdo))->findBy('id', $parameters[1]);
+        $renderer = new Renderer("../templates/admin/base.php");
+        if (!empty($_POST)) {
+            $status = !empty($_POST['online']);
+            $chapter = (new Chapter(new Validator($_POST, $pdo)))
+                ->setId($parameters[1])
+                ->setTitle($_POST['titre'], $parameters[1])
+                ->setContent($_POST['contenu'])
+                ->setSlug($_POST['titre'])
+                ->setStatus($status);
+            if (!empty($chapter->getErrors())) {
+                Session::set('title', $chapter->getTitle());
+                Session::set('content', $chapter->getContent());
+                Session::set('status', $chapter->getStatus());
+                $renderer->render("../templates/admin/chapter/edit.php", [
+                    'router' => $router,
+                    'errors' => $chapter->getErrors(),
+                    'chapter'   => $chapter
+                ]);
+            } else {
+                (new ChapterRepository($pdo))->updateChapter($chapter);
+                FlashMessage::success('Le chapitre a bien été modifier');
+                Response::redirection($router->generateUrl("admin.chapter.edit", ['slug' => $parameters[0], 'id' => $parameters[1]]));
+            }
+        }
+        $renderer->render("../templates/admin/chapter/edit.php", [
+            'router' => $router,
+            'chapter' => $chapter
+        ]);
     }
 }
