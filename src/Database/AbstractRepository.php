@@ -63,7 +63,7 @@ abstract class AbstractRepository
      * @return int
      * @throws Exception
      */
-    public function create (array $data): int
+    public function create(array $data): int
     {
         $fields = [];
         foreach ($data as $key => $value) {
@@ -76,5 +76,18 @@ abstract class AbstractRepository
             throw new \Exception("Impossible de créer l'enregistrement dans la table {$this->table}");
         }
         return (int)$this->PDO->lastInsertId();
+    }
+
+    /**
+     * @param int $id
+     * @throws Exception
+     */
+    public function delete(int $id): void
+    {
+        $query = $this->PDO->prepare("DELETE FROM {$this->table} WHERE id = ?");
+        $ok = $query->execute([$id]);
+        if ($ok === false) {
+            throw new \Exception("Impossible de supprimer l'enregistrement $id dans la table {$this->table}");
+        }
     }
 }

@@ -92,4 +92,10 @@ class ChapterController
             'chapter' => $chapter
         ]);
     }
+
+    public static function delete(Router $router, array $parameters)
+    {
+        (new ChapterRepository(Connection::getPDO()))->delete($parameters[0]);
+        Response::redirection($router->generateUrl('admin.novel'));
+    }
 }
