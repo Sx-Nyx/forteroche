@@ -46,4 +46,13 @@ class CommentRepository extends AbstractRepository
         $query = $this->PDO->query("UPDATE comment SET reported={$comment->getReported()} WHERE id={$id}");
         $query->execute();
     }
+
+    /**
+     * @return array
+     */
+    public function findAllReported()
+    {
+        $query = $this->PDO->query('SELECT * FROM comment WHERE reported > 0 ORDER BY reported DESC');
+        return $query->fetchAll(PDO::FETCH_CLASS, Comment::class);
+    }
 }
