@@ -17,4 +17,9 @@
             Approuver
         </button>
     </form>
+    <form action="<?= $router->generateUrl('admin.comment.delete', ['id' => $comment->getId()]) ?>" method="POST" onsubmit="return confirm('Voulez vous vraiment supprimer ce commentaire ?')" style="display:inline">
+        <button type="submit" class="dashboard__actions" title="Supprimer">
+            Supprimer
+        </button>
+    </form>
 </div>

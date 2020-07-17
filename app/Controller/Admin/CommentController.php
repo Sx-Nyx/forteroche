@@ -37,4 +37,11 @@ class CommentController
         (new CommentRepository(Connection::getPDO()))->updateComment($comment);
         Response::redirection($router->generateUrl('admin.novel'));
     }
+
+    public static function delete(Router $router, array $parameters)
+    {
+        (new CommentRepository(Connection::getPDO()))->delete($parameters[0]);
+        Response::redirection($router->generateUrl('admin.novel'));
+
+    }
 }
