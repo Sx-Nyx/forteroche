@@ -27,24 +27,16 @@ class CommentRepository extends AbstractRepository
      * @param Comment $comment
      * @throws Exception
      */
-    public function create(Comment $comment)
+    public function createComment(Comment $comment): void
     {
-        $fields = [];
-        $data = [
+        $id = $this->create([
             'author'        => $comment->getAuthor(),
             'content'       => $comment->getContent(),
             'reported'      => $comment->getReported(),
             'chapter_id'    => $comment->getChapterId(),
             'created_at'    => $comment->getCreatedAt()->format('Y-m-d H:i:s')
-        ];
-        foreach ($data as $key => $value) {
-            $fields[] = "$key = :$key";
-        }
-        $query = $this->PDO->prepare("INSERT INTO comment SET " . implode(', ', $fields));
-        $response = $query->execute($data);
-        if ($response === false) {
-            throw new \Exception("Impossible de créer le commentaire");
-        }
+        ]);
+        $comment->setId($id);
     }
 
     public function report(int $id)

@@ -31,7 +31,7 @@ class CommentController
             Response::redirection($router->generateUrl('novel.show',
                 ['novelSlug' => $parameters[0], 'chapterSlug' => $parameters[1]]));
         }
-        (new CommentRepository(Connection::getPDO()))->create($comment);
+        (new CommentRepository(Connection::getPDO()))->createComment($comment);
         FlashMessage::success('Votre commentaire a bien été plubié');
         Response::redirection($router->generateUrl('novel.show',
             ['novelSlug' => $parameters[0], 'chapterSlug' => $parameters[1]]));
