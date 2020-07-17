@@ -13,7 +13,7 @@
                 <td><?= $comment->getAuthor() ?></td>
                 <td><?= $comment->getReported() ?></td>
                 <td class="dashboard__actions-comment">
-                    <a href="#" class="dashboard__actions" title="Vérifier">
+                    <a href="<?= $router->generateUrl('admin.comment.show', ['id' => $comment->getId()]) ?>" class="dashboard__actions" title="Vérifier">
                         <svg class="dashboard__icon">
                             <use xlink:href="/assets/images/sprite.svg#gear"></use>
                         </svg>
