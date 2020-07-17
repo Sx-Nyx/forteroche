@@ -6,6 +6,7 @@ use App\Repository\CommentRepository;
 use Framework\Database\Connection;
 use Framework\Rendering\Renderer;
 use Framework\Routing\Router;
+use Framework\Server\Response;
 
 class CommentController
 {
@@ -27,5 +28,13 @@ class CommentController
             'router'    => $router,
             'comment'     => $comment,
         ]);
+    }
+
+    public static function edit(Router $router, array $parameters)
+    {
+        $comment = (new CommentRepository(Connection::getPDO()))->findBy('id', $parameters[0]);
+        $comment->setReported(-1);
+        (new CommentRepository(Connection::getPDO()))->updateComment($comment);
+        Response::redirection($router->generateUrl('admin.novel'));
     }
 }

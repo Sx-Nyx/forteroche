@@ -39,6 +39,13 @@ class CommentRepository extends AbstractRepository
         $comment->setId($id);
     }
 
+    public function updateComment(Comment $comment): void
+    {
+        $this->update([
+            'reported'          => $comment->getReported(),
+        ], $comment->getId());
+    }
+
     public function report(int $id)
     {
         $comment = $this->findBy('id', $id);
