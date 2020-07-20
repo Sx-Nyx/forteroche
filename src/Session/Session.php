@@ -16,7 +16,7 @@ abstract class Session
 
     /**
      * @param string $key
-     * @return bool|mixed
+     * @return mixed
      */
     public static function get(string $key)
     {

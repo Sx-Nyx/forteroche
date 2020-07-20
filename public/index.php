@@ -7,6 +7,12 @@ require "../vendor/autoload.php";
 const NAMESPACE_CONTROLLER = 'App\Controller\\';
 
 $router = (new Router('templates\notfound.php'))
+
+    // LOGIN
+     ->get('/login', NAMESPACE_CONTROLLER . 'LoginController::index', 'login')
+     ->post('/login', NAMESPACE_CONTROLLER . 'LoginController::login', 'login.attempt')
+     ->get('/logout', NAMESPACE_CONTROLLER . 'LoginController::logout', 'logout')
+
     // ADMIN_NOVEL
     ->get('/admin', NAMESPACE_CONTROLLER . 'Admin\NovelController::index', 'admin.novel')
     ->get('/admin/roman/:slug/:id', NAMESPACE_CONTROLLER . 'Admin\NovelController::show', 'admin.novel.show')

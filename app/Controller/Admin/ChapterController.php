@@ -9,6 +9,7 @@ use DateTime;
 use Framework\Database\Connection;
 use Framework\Rendering\Renderer;
 use Framework\Routing\Router;
+use Framework\Security\Authentification;
 use Framework\Server\Response;
 use Framework\Session\FlashMessage;
 use Framework\Session\Session;
@@ -18,6 +19,7 @@ class ChapterController
 {
     public static function new(Router $router, array $parameters)
     {
+        Authentification::verify();
         $pdo = Connection::getPDO();
         $novel = (new NovelRepository($pdo))->findBy('slug', $parameters[0]);
         if (!empty($_POST)) {
@@ -61,6 +63,7 @@ class ChapterController
 
     public static function edit(Router $router, array $parameters)
     {
+        Authentification::verify();
         $pdo = Connection::getPDO();
         $chapter = (new ChapterRepository($pdo))->findBy('id', $parameters[1]);
         $renderer = new Renderer("../templates/admin/base.php");
@@ -95,6 +98,7 @@ class ChapterController
 
     public static function delete(Router $router, array $parameters)
     {
+        Authentification::verify();
         (new ChapterRepository(Connection::getPDO()))->delete($parameters[0]);
         Response::redirection($router->generateUrl('admin.novel'));
     }

@@ -8,6 +8,7 @@ use App\Repository\NovelRepository;
 use Framework\Database\Connection;
 use Framework\Rendering\Renderer;
 use Framework\Routing\Router;
+use Framework\Security\Authentification;
 use Framework\Server\Response;
 use Framework\Session\FlashMessage;
 use Framework\Session\Session;
@@ -17,6 +18,7 @@ class NovelController
 {
     public static function index(Router $router)
     {
+        Authentification::verify();
         $pdo = Connection::getPDO();
         $novel = (new NovelRepository($pdo))->findLatest();
         $chapters = (new ChapterRepository($pdo))->findAllBy($novel->getId());
@@ -31,6 +33,7 @@ class NovelController
 
     public static function show(Router $router, array $parameters)
     {
+        Authentification::verify();
         $novel = (new NovelRepository(Connection::getPDO()))->findBy('slug', $parameters[0]);
         $renderer = new Renderer("../templates/admin/base.php");
         $renderer->render("../templates/admin/novel/show.php", [
@@ -41,6 +44,7 @@ class NovelController
 
     public static function edit(Router $router, array $parameters)
     {
+        Authentification::verify();
         $pdo = Connection::getPDO();
         $novel = (new Novel(new Validator($_POST, $pdo)))
             ->setId($parameters[1])

@@ -17,6 +17,7 @@ use Framework\Session\FlashMessage;
     <nav class="header__nav header__nav-admin">
         <a href="<?= $router->generateUrl('admin.novel') ?>">Le roman</a>
         <a href="<?= $router->generateUrl('admin.comment') ?>">Les commentaires <span class="header__notification">3</span></a>
+        <a href="<?= $router->generateUrl('logout') ?>">Se déconnecter</a>
     </nav>
 </header>
 
