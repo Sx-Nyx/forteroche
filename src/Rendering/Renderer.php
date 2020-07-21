@@ -27,10 +27,10 @@ class Renderer
     /**
      * @param string $viewPath
      * @param array $vars
-     * @return bool
+     * @return string
      * @throws ViewRenderingException
      */
-    public function render(string $viewPath, array $vars = [])
+    public function render(string $viewPath, array $vars = []):string
     {
         if (!file_exists($viewPath)) {
             throw new ViewRenderingException('Unable to load view, the file does not exist');

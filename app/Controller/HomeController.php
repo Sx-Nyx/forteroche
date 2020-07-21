@@ -3,20 +3,33 @@
 namespace App\Controller;
 
 use App\Repository\NovelRepository;
+use Framework\Controller\AbstractController;
 use Framework\Database\Connection;
-use Framework\Rendering\Renderer;
+use Framework\Rendering\Exception\ViewRenderingException;
 use Framework\Routing\Router;
 
-class HomeController
+class HomeController extends AbstractController
 {
-    public static function index(Router $router):void
+    /**
+     * @var string $viewBasePath
+     */
+    protected $viewBasePath = 'templates/home/';
+
+    public function __construct(Router $router)
+    {
+        parent::__construct($router);
+    }
+
+    /**
+     * @return string
+     * @throws ViewRenderingException
+     */
+    public function index(): string
     {
         $novel = (new NovelRepository(Connection::getPDO()))->findLatest();
-        $renderer = new Renderer("../templates/base.php");
-        $renderer->render("../templates/home/index.php", [
-            'novel'     => $novel,
+        return $this->render('index', [
+            'novel' => $novel,
             'novelSlug' => $novel->getSlug(),
-            'router' => $router
         ]);
     }
 }

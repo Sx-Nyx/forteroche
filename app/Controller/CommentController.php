@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use App\Repository\ChapterRepository;
 use App\Repository\CommentRepository;
 use DateTime;
+use Framework\Controller\AbstractController;
 use Framework\Database\Connection;
 use Framework\Routing\Router;
 use Framework\Server\Response;
@@ -13,9 +14,19 @@ use Framework\Session\FlashMessage;
 use Framework\Session\Session;
 use Framework\Validator\Validator;
 
-class CommentController
+class CommentController extends AbstractController
 {
-    public static function new(Router $router, array $parameters)
+    /**
+     * @var Router
+     */
+    private $router;
+
+    public function __construct(Router $router)
+    {
+        $this->router = $router;
+        parent::__construct($router);
+    }
+    public function new(array $parameters)
     {
         $chapter = (new ChapterRepository(Connection::getPDO()))->findBy('slug', $parameters[1]);
         $comment = (new Comment(new Validator($_POST)))
@@ -28,19 +39,19 @@ class CommentController
             FlashMessage::errors($comment->getErrors());
             Session::set('pseudo', $comment->getAuthor());
             Session::set('commentaire', $comment->getContent());
-            Response::redirection($router->generateUrl('novel.show',
+            Response::redirection($this->router->generateUrl('novel.show',
                 ['novelSlug' => $parameters[0], 'chapterSlug' => $parameters[1]]));
         }
         (new CommentRepository(Connection::getPDO()))->createComment($comment);
         FlashMessage::success('Votre commentaire a bien été plubié');
-        Response::redirection($router->generateUrl('novel.show',
+        Response::redirection($this->router->generateUrl('novel.show',
             ['novelSlug' => $parameters[0], 'chapterSlug' => $parameters[1]]));
     }
 
-    public static function report(Router $router, array $parameters)
+    public function report(array $parameters)
     {
         (new CommentRepository(Connection::getPDO()))->report($parameters[2]);
-        Response::redirection($router->generateUrl('novel.show',
+        Response::redirection($this->router->generateUrl('novel.show',
             ['novelSlug' => $parameters[0], 'chapterSlug' => $parameters[1]]));
     }
 }

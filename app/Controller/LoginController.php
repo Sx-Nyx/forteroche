@@ -4,28 +4,52 @@ namespace App\Controller;
 
 use App\Repository\NovelRepository;
 use App\Repository\UserRepository;
+use Framework\Controller\AbstractController;
 use Framework\Database\Connection;
 use Framework\Database\Exception\NotFoundException;
-use Framework\Rendering\Renderer;
+use Framework\Rendering\Exception\ViewRenderingException;
+use Framework\Routing\Exception\RouteNotFoundException;
 use Framework\Routing\Router;
 use Framework\Security\Authentification;
 use Framework\Server\Response;
 use Framework\Session\Session;
 
-class LoginController
+class LoginController extends AbstractController
 {
-    public static function index(Router $router, array $error = [])
+    /**
+     * @var string $viewBasePath
+     */
+    protected $viewBasePath = 'templates/login/';
+    /**
+     * @var Router
+     */
+    private $router;
+
+    public function __construct(Router $router)
+    {
+        $this->router = $router;
+        parent::__construct($router);
+    }
+
+    /**
+     * @param array $error
+     * @return string
+     * @throws ViewRenderingException
+     */
+    public function index(array $error = []): string
     {
         $novel = (new NovelRepository(Connection::getPDO()))->findLatest();
-        $renderer = new Renderer("../templates/base.php");
-        $renderer->render("../templates/login/index.php", [
+        return $this->render('index', [
             'novelSlug' => $novel->getSlug(),
-            'router' => $router,
             'error' => $error
         ]);
     }
 
-    public static function login(Router $router)
+    /**
+     * @throws ViewRenderingException
+     * @throws RouteNotFoundException
+     */
+    public function login()
     {
         $error['credentials'] = 'Identifiant ou mot de passe incorrect';
         if (!empty($_POST['username']) && !empty($_POST['password'])) {
@@ -34,15 +58,15 @@ class LoginController
                 $user = $repository->findBy('username', $_POST['username']);
                 if (password_verify($_POST['password'], $user->getPassword()) === true) {
                     Session::set('auth', $user->getId());
-                    Response::redirection($router->generateUrl('admin.novel'));
+                    Response::redirection($this->router->generateUrl('admin.novel'));
                 }
             } catch (NotFoundException $e) {
-                self::index($router, $error);
+                $this->index($error);
             }
         }
     }
 
-    public static function logout()
+    public function logout()
     {
         Authentification::verify();
         Session::delete('auth');

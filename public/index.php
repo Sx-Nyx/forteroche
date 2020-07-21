@@ -2,12 +2,13 @@
 
 use Framework\Routing\Router;
 
-require "../vendor/autoload.php";
+chdir(dirname(__DIR__));
+
+require "vendor/autoload.php";
 
 const NAMESPACE_CONTROLLER = 'App\Controller\\';
 
 $router = (new Router('templates\notfound.php'))
-
     // LOGIN
      ->get('/login', NAMESPACE_CONTROLLER . 'LoginController::index', 'login')
      ->post('/login', NAMESPACE_CONTROLLER . 'LoginController::login', 'login.attempt')
