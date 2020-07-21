@@ -69,31 +69,29 @@ class Route
      */
     public function dispatch(Router $router, $action = null)
     {
-        $params = [
-            'router'        => $router,
-            'parameters'    => $this->matched_parameters
-        ];
+        $params = $this->matched_parameters;
 
         $action = !is_null($action) ? $action : $this->callable;
+
+        $call       = explode('::', $action);
+        $className  = $call[0];
+        $methodName = $call[1];
+
+        if (class_exists($className))
+        {
+            $class = new $className($router);
+            if (method_exists($class, $methodName))
+            {
+
+                return $class->$methodName($params);
+            }
+        }
+
         if (is_callable($action))
         {
             return call_user_func_array($action, $params);
         }
-        $call       = explode('::', $action);
-        $className  = $call[0];
-        $methodName = $call[1];
-        if (class_exists($className))
-        {
-            $class = new $className;
 
-            if (method_exists($class, $methodName))
-            {
-                return call_user_func_array([
-                    $class,
-                    $methodName
-                ], $params);
-            }
-        }
         throw new RouteCallbackException("Unable to dispatch router action.");
     }
 
