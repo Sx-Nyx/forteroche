@@ -5,44 +5,79 @@ namespace App\Controller\Admin;
 use App\Entity\Novel;
 use App\Repository\ChapterRepository;
 use App\Repository\NovelRepository;
+use Framework\Controller\AdminAbstractController;
 use Framework\Database\Connection;
-use Framework\Rendering\Renderer;
+use Framework\Database\Exception\NotFoundException;
+use Framework\Rendering\Exception\ViewRenderingException;
+use Framework\Routing\Exception\RouteNotFoundException;
 use Framework\Routing\Router;
 use Framework\Security\Authentification;
+use Framework\Security\Exception\ForbiddenException;
 use Framework\Server\Response;
 use Framework\Session\FlashMessage;
 use Framework\Session\Session;
 use Framework\Validator\Validator;
 
-class NovelController
+class NovelController extends AdminAbstractController
 {
-    public static function index(Router $router)
+    /**
+     * @var string $viewBasePath
+     */
+    protected $viewBasePath = 'templates/admin/novel/';
+
+    /**
+     * @var Router
+     */
+    private $router;
+
+    public function __construct(Router $router)
+    {
+        $this->router = $router;
+        parent::__construct($router);
+    }
+
+    /**
+     * @return string
+     * @throws ViewRenderingException
+     * @throws ForbiddenException
+     */
+    public function index()
     {
         Authentification::verify();
         $pdo = Connection::getPDO();
         $novel = (new NovelRepository($pdo))->findLatest();
         $chapters = (new ChapterRepository($pdo))->findAllBy($novel->getId());
-
-        $renderer = new Renderer("../templates/admin/base.php");
-        $renderer->render("../templates/admin/novel/index.php", [
-            'router'    => $router,
-            'novel'     => $novel,
-            'chapters'  => $chapters
+        return $this->render('index', [
+            'novel' => $novel,
+            'chapters' => $chapters
         ]);
     }
 
-    public static function show(Router $router, array $parameters)
+    /**
+     * @param array $parameters
+     * @return mixed
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws ViewRenderingException
+     */
+    public function show(array $parameters)
     {
         Authentification::verify();
         $novel = (new NovelRepository(Connection::getPDO()))->findBy('slug', $parameters[0]);
-        $renderer = new Renderer("../templates/admin/base.php");
-        $renderer->render("../templates/admin/novel/show.php", [
-            'router'    => $router,
-            'novel'     => $novel
+        return $this->render('show', [
+            'novel' => $novel
         ]);
     }
 
-    public static function edit(Router $router, array $parameters)
+    /**
+     * @param array $parameters
+     * @return string
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws ViewRenderingException
+     * @throws RouteNotFoundException
+     */
+    public function edit(array $parameters)
     {
         Authentification::verify();
         $pdo = Connection::getPDO();
@@ -54,17 +89,14 @@ class NovelController
         if (!empty($novel->getErrors())) {
             Session::set('title', $novel->getTitle());
             Session::set('description', $novel->getDescription());
-            $renderer = new Renderer("../templates/admin/base.php");
-            $renderer->render("../templates/admin/novel/show.php", [
-                'router'    => $router,
-                'errors'    => $novel->getErrors(),
-                'novel'     => (new NovelRepository($pdo))->findBy('id', $parameters[1])
+            return $this->render('show', [
+                'errors' => $novel->getErrors(),
+                'novel' => (new NovelRepository($pdo))->findBy('id', $parameters[1])
             ]);
-        } else {
-            (new NovelRepository($pdo))->updateNovel($novel);
-            FlashMessage::success('Le roman a bien été modifier');
-            Response::redirection($router->generateUrl('admin.novel.show',
-                ['slug' => $novel->getSlug(), 'id' => $novel->getId()]));
         }
+        (new NovelRepository($pdo))->updateNovel($novel);
+        FlashMessage::success('Le roman a bien été modifier');
+        Response::redirection($this->router->generateUrl('admin.novel.show',
+            ['slug' => $novel->getSlug(), 'id' => $novel->getId()]));
     }
 }

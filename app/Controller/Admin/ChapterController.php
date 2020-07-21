@@ -6,18 +6,46 @@ use App\Entity\Chapter;
 use App\Repository\ChapterRepository;
 use App\Repository\NovelRepository;
 use DateTime;
+use Framework\Controller\AdminAbstractController;
 use Framework\Database\Connection;
+use Framework\Database\Exception\NotFoundException;
+use Framework\Rendering\Exception\ViewRenderingException;
 use Framework\Rendering\Renderer;
+use Framework\Routing\Exception\RouteNotFoundException;
 use Framework\Routing\Router;
 use Framework\Security\Authentification;
+use Framework\Security\Exception\ForbiddenException;
 use Framework\Server\Response;
 use Framework\Session\FlashMessage;
 use Framework\Session\Session;
 use Framework\Validator\Validator;
 
-class ChapterController
+class ChapterController extends AdminAbstractController
 {
-    public static function new(Router $router, array $parameters)
+    /**
+     * @var string $viewBasePath
+     */
+    protected $viewBasePath = 'templates/admin/chapter/';
+
+    /**
+     * @var Router
+     */
+    private $router;
+
+    public function __construct(Router $router)
+    {
+        $this->router = $router;
+        parent::__construct($router);
+    }
+
+    /**
+     * @param array $parameters
+     * @return string
+     * @throws NotFoundException
+     * @throws ViewRenderingException
+     * @throws ForbiddenException
+     */
+    public function new(array $parameters)
     {
         Authentification::verify();
         $pdo = Connection::getPDO();
@@ -35,38 +63,39 @@ class ChapterController
                 Session::set('title', $chapter->getTitle());
                 Session::set('content', $chapter->getContent());
                 Session::set('status', $chapter->getStatus());
-                $renderer = new Renderer("../templates/admin/base.php");
-                $renderer->render("../templates/admin/chapter/new.php", [
-                    'router'    => $router,
+                return $this->render('new', [
                     'errors'    => $chapter->getErrors(),
                     'novel'     => $novel
                 ]);
             } else {
                 (new ChapterRepository($pdo))->createChapter($chapter);
                 FlashMessage::success('Le chapitre a bien été créer');
-                $renderer = new Renderer("../templates/admin/base.php");
-                $renderer->render("../templates/admin/chapter/new.php", [
-                    'router'    => $router,
+                return $this->render('new', [
                     'novel'     => $novel
                 ]);
             }
         } else {
             $chapter = new Chapter();
-            $renderer = new Renderer("../templates/admin/base.php");
-            $renderer->render("../templates/admin/chapter/new.php", [
-                'router'    => $router,
+            return $this->render('new', [
                 'novel'     => $novel,
                 'chapter'   => $chapter
             ]);
         }
     }
 
-    public static function edit(Router $router, array $parameters)
+    /**
+     * @param array $parameters
+     * @return string
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws ViewRenderingException
+     * @throws RouteNotFoundException
+     */
+    public function edit(array $parameters)
     {
         Authentification::verify();
         $pdo = Connection::getPDO();
         $chapter = (new ChapterRepository($pdo))->findBy('id', $parameters[1]);
-        $renderer = new Renderer("../templates/admin/base.php");
         if (!empty($_POST)) {
             $status = !empty($_POST['online']);
             $chapter = (new Chapter(new Validator($_POST, $pdo)))
@@ -79,27 +108,30 @@ class ChapterController
                 Session::set('title', $chapter->getTitle());
                 Session::set('content', $chapter->getContent());
                 Session::set('status', $chapter->getStatus());
-                $renderer->render("../templates/admin/chapter/edit.php", [
-                    'router' => $router,
+                return $this->render('edit', [
                     'errors' => $chapter->getErrors(),
                     'chapter'   => $chapter
                 ]);
             } else {
                 (new ChapterRepository($pdo))->updateChapter($chapter);
                 FlashMessage::success('Le chapitre a bien été modifier');
-                Response::redirection($router->generateUrl("admin.chapter.edit", ['slug' => $parameters[0], 'id' => $parameters[1]]));
+                Response::redirection($this->router->generateUrl("admin.chapter.edit", ['slug' => $parameters[0], 'id' => $parameters[1]]));
             }
         }
-        $renderer->render("../templates/admin/chapter/edit.php", [
-            'router' => $router,
+        return $this->render('edit', [
             'chapter' => $chapter
         ]);
     }
 
-    public static function delete(Router $router, array $parameters)
+    /**
+     * @param array $parameters
+     * @throws ForbiddenException
+     * @throws RouteNotFoundException
+     */
+    public function delete(array $parameters)
     {
         Authentification::verify();
         (new ChapterRepository(Connection::getPDO()))->delete($parameters[0]);
-        Response::redirection($router->generateUrl('admin.novel'));
+        Response::redirection($this->router->generateUrl('admin.novel'));
     }
 }
