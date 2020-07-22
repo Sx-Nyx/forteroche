@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Novel;
 use App\Repository\ChapterRepository;
 use App\Repository\NovelRepository;
-use Framework\Controller\AdminAbstractController;
+use Framework\Controller\AbstractAdminController;
 use Framework\Database\Connection;
 use Framework\Database\Exception\NotFoundException;
 use Framework\Rendering\Exception\ViewRenderingException;
@@ -18,7 +18,7 @@ use Framework\Session\FlashMessage;
 use Framework\Session\Session;
 use Framework\Validator\Validator;
 
-class NovelController extends AdminAbstractController
+class NovelController extends AbstractAdminController
 {
     /**
      * @var string $viewBasePath

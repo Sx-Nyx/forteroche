@@ -6,7 +6,7 @@ use App\Entity\Chapter;
 use App\Repository\ChapterRepository;
 use App\Repository\NovelRepository;
 use DateTime;
-use Framework\Controller\AdminAbstractController;
+use Framework\Controller\AbstractAdminController;
 use Framework\Database\Connection;
 use Framework\Database\Exception\NotFoundException;
 use Framework\Rendering\Exception\ViewRenderingException;
@@ -20,7 +20,7 @@ use Framework\Session\FlashMessage;
 use Framework\Session\Session;
 use Framework\Validator\Validator;
 
-class ChapterController extends AdminAbstractController
+class ChapterController extends AbstractAdminController
 {
     /**
      * @var string $viewBasePath

@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Repository\CommentRepository;
-use Framework\Controller\AdminAbstractController;
+use Framework\Controller\AbstractAdminController;
 use Framework\Database\Connection;
 use Framework\Database\Exception\NotFoundException;
 use Framework\Rendering\Exception\ViewRenderingException;
@@ -12,7 +12,7 @@ use Framework\Security\Authentification;
 use Framework\Security\Exception\ForbiddenException;
 use Framework\Server\Response;
 
-class CommentController extends AdminAbstractController
+class CommentController extends AbstractAdminController
 {
     /**
      * @var string $viewBasePath

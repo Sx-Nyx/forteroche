@@ -4,7 +4,7 @@ namespace Framework\Controller;
 
 use Framework\Routing\Router;
 
-class AdminAbstractController extends AbstractController
+abstract class AbstractAdminController extends AbstractController
 {
     /**
      * @var string $viewBasePath
