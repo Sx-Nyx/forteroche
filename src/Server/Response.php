@@ -6,11 +6,10 @@ abstract class Response
 {
     /**
      * @param string $url
-     * @param int $code
      */
-    public static function redirection(string $url, int $code = 301): void
+    public static function redirection(string $url): void
     {
-        header('Location: ' . $url, $code);
+        header('Location: ' . $url);
         exit();
     }
 }
