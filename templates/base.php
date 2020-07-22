@@ -1,3 +1,8 @@
+<?php
+
+use Framework\Session\FlashMessage;
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -16,6 +21,14 @@
         <a href="<?= $router->generateUrl('novel.index', ['slug' => $novelSlug]) ?>">Le roman</a>
     </nav>
 </header>
+<?php if (FlashMessage::haveFlash('success')): ?>
+    <p><?= FlashMessage::get('success') ?></p>
+<?php endif; ?>
+<?php if (FlashMessage::haveFlash('error')): ?>
+    <p><?= FlashMessage::get('error') ?></p>
+<?php endif; ?>
+
 <?= $content ?>
+
 </body>
 </html>

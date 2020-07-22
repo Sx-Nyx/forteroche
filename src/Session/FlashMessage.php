@@ -13,11 +13,23 @@ class FlashMessage
     }
 
     /**
-     * @param array $errors
+     * @param string $error
      */
-    public static function errors(array $errors): void
+    public static function error(string $error): void
     {
-        Session::set('errors', $errors);
+        Session::set('error', $error);
+    }
+
+    /**
+     * @param string $type
+     * @return bool
+     */
+    public static function haveFlash(string $type):bool
+    {
+        if (Session::get($type) === false) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -33,4 +45,5 @@ class FlashMessage
         }
         return null;
     }
+
 }
