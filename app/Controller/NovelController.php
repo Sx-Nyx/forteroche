@@ -48,12 +48,15 @@ class NovelController extends AbstractController
     /**
      * @param array $parameters
      * @return string
-     * @throws NotFoundException
      * @throws ViewRenderingException
      */
     public function show(array $parameters): string
     {
-        $chapter = (new ChapterRepository(Connection::getPDO()))->findWithComment($parameters[1]);
+        try {
+            $chapter = (new ChapterRepository(Connection::getPDO()))->findWithComment($parameters[1]);
+        } catch (NotFoundException $exception) {
+            $this->router->generate404();
+        }
         return $this->render('show', [
             'novelSlug' => $parameters[0],
             'chapterSlug' => $parameters[1],
