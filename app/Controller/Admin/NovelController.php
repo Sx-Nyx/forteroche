@@ -11,8 +11,6 @@ use Framework\Database\Exception\NotFoundException;
 use Framework\Rendering\Exception\ViewRenderingException;
 use Framework\Routing\Exception\RouteNotFoundException;
 use Framework\Routing\Router;
-use Framework\Security\Authentification;
-use Framework\Security\Exception\ForbiddenException;
 use Framework\Server\Response;
 use Framework\Session\FlashMessage;
 use Framework\Session\Session;
@@ -38,12 +36,12 @@ class NovelController extends AbstractAdminController
 
     /**
      * @return string
+     * @throws RouteNotFoundException
      * @throws ViewRenderingException
-     * @throws ForbiddenException
      */
     public function index()
     {
-        Authentification::verify();
+        $this->authSecurity();
         $pdo = Connection::getPDO();
         $novel = (new NovelRepository($pdo))->findLatest();
         $chapters = (new ChapterRepository($pdo))->findAllBy($novel->getId());
@@ -56,13 +54,13 @@ class NovelController extends AbstractAdminController
     /**
      * @param array $parameters
      * @return mixed
-     * @throws ForbiddenException
      * @throws NotFoundException
+     * @throws RouteNotFoundException
      * @throws ViewRenderingException
      */
     public function show(array $parameters)
     {
-        Authentification::verify();
+        $this->authSecurity();
         $novel = (new NovelRepository(Connection::getPDO()))->findBy('slug', $parameters[0]);
         return $this->render('show', [
             'novel' => $novel
@@ -72,14 +70,13 @@ class NovelController extends AbstractAdminController
     /**
      * @param array $parameters
      * @return string
-     * @throws ForbiddenException
      * @throws NotFoundException
-     * @throws ViewRenderingException
      * @throws RouteNotFoundException
+     * @throws ViewRenderingException
      */
     public function edit(array $parameters)
     {
-        Authentification::verify();
+        $this->authSecurity();
         $pdo = Connection::getPDO();
         $novel = (new Novel(new Validator($_POST, $pdo)))
             ->setId($parameters[1])

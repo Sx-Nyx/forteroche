@@ -7,9 +7,8 @@ use Framework\Controller\AbstractAdminController;
 use Framework\Database\Connection;
 use Framework\Database\Exception\NotFoundException;
 use Framework\Rendering\Exception\ViewRenderingException;
+use Framework\Routing\Exception\RouteNotFoundException;
 use Framework\Routing\Router;
-use Framework\Security\Authentification;
-use Framework\Security\Exception\ForbiddenException;
 use Framework\Server\Response;
 
 class CommentController extends AbstractAdminController
@@ -33,11 +32,11 @@ class CommentController extends AbstractAdminController
     /**
      * @return string
      * @throws ViewRenderingException
-     * @throws ForbiddenException
+     * @throws RouteNotFoundException
      */
     public function index()
     {
-        Authentification::verify();
+        $this->authSecurity();
         $comments = (new CommentRepository(Connection::getPDO()))->findAllReported();
         return $this->render('index', [
             'comments'     => $comments,
@@ -47,31 +46,40 @@ class CommentController extends AbstractAdminController
     /**
      * @param array $parameters
      * @return string
-     * @throws ForbiddenException
-     * @throws ViewRenderingException
      * @throws NotFoundException
+     * @throws RouteNotFoundException
+     * @throws ViewRenderingException
      */
     public function show(array $parameters)
     {
-        Authentification::verify();
+        $this->authSecurity();
         $comment = (new CommentRepository(Connection::getPDO()))->findBy('id', $parameters[0]);
         return $this->render('show', [
             'comment'     => $comment,
         ]);
     }
 
+    /**
+     * @param array $parameters
+     * @throws NotFoundException
+     * @throws RouteNotFoundException
+     */
     public function edit(array $parameters)
     {
-        Authentification::verify();
+        $this->authSecurity();
         $comment = (new CommentRepository(Connection::getPDO()))->findBy('id', $parameters[0]);
         $comment->setReported(-1);
         (new CommentRepository(Connection::getPDO()))->updateComment($comment);
         Response::redirection($this->router->generateUrl('admin.novel'));
     }
 
+    /**
+     * @param array $parameters
+     * @throws RouteNotFoundException
+     */
     public function delete(array $parameters)
     {
-        Authentification::verify();
+        $this->authSecurity();
         (new CommentRepository(Connection::getPDO()))->delete($parameters[0]);
         Response::redirection($this->router->generateUrl('admin.novel'));
 

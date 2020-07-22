@@ -21,7 +21,12 @@ use Framework\Session\FlashMessage;
     </nav>
 </header>
 
-<p><?= FlashMessage::get('success') ?></p>
+<?php if (FlashMessage::haveFlash('success')): ?>
+    <p><?= FlashMessage::get('success') ?></p>
+<?php endif; ?>
+<?php if (FlashMessage::haveFlash('error')): ?>
+    <p><?= FlashMessage::get('error') ?></p>
+<?php endif; ?>
 
 <?= $content ?>
 

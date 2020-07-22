@@ -10,11 +10,8 @@ use Framework\Controller\AbstractAdminController;
 use Framework\Database\Connection;
 use Framework\Database\Exception\NotFoundException;
 use Framework\Rendering\Exception\ViewRenderingException;
-use Framework\Rendering\Renderer;
 use Framework\Routing\Exception\RouteNotFoundException;
 use Framework\Routing\Router;
-use Framework\Security\Authentification;
-use Framework\Security\Exception\ForbiddenException;
 use Framework\Server\Response;
 use Framework\Session\FlashMessage;
 use Framework\Session\Session;
@@ -42,12 +39,12 @@ class ChapterController extends AbstractAdminController
      * @param array $parameters
      * @return string
      * @throws NotFoundException
+     * @throws RouteNotFoundException
      * @throws ViewRenderingException
-     * @throws ForbiddenException
      */
     public function new(array $parameters)
     {
-        Authentification::verify();
+        $this->authSecurity();
         $pdo = Connection::getPDO();
         $novel = (new NovelRepository($pdo))->findBy('slug', $parameters[0]);
         if (!empty($_POST)) {
@@ -86,14 +83,13 @@ class ChapterController extends AbstractAdminController
     /**
      * @param array $parameters
      * @return string
-     * @throws ForbiddenException
      * @throws NotFoundException
-     * @throws ViewRenderingException
      * @throws RouteNotFoundException
+     * @throws ViewRenderingException
      */
     public function edit(array $parameters)
     {
-        Authentification::verify();
+        $this->authSecurity();
         $pdo = Connection::getPDO();
         $chapter = (new ChapterRepository($pdo))->findBy('id', $parameters[1]);
         if (!empty($_POST)) {
@@ -125,12 +121,11 @@ class ChapterController extends AbstractAdminController
 
     /**
      * @param array $parameters
-     * @throws ForbiddenException
      * @throws RouteNotFoundException
      */
     public function delete(array $parameters)
     {
-        Authentification::verify();
+        $this->authSecurity();
         (new ChapterRepository(Connection::getPDO()))->delete($parameters[0]);
         Response::redirection($this->router->generateUrl('admin.novel'));
     }

@@ -21,6 +21,7 @@ use Framework\Session\FlashMessage;
         <a href="<?= $router->generateUrl('novel.index', ['slug' => $novelSlug]) ?>">Le roman</a>
     </nav>
 </header>
+
 <?php if (FlashMessage::haveFlash('success')): ?>
     <p><?= FlashMessage::get('success') ?></p>
 <?php endif; ?>
