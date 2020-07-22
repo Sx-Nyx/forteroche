@@ -17,22 +17,26 @@ class NovelController extends AbstractController
      */
     protected $viewBasePath = 'templates/novel/';
 
-   public function __construct(Router $router)
+    /**
+     * @var Router
+     */
+    private $router;
+
+    public function __construct(Router $router)
    {
        parent::__construct($router);
+       $this->router = $router;
    }
 
     /**
      * @param array $parameters
      * @return string
-     * @throws NotFoundException
      * @throws ViewRenderingException
      */
     public function index(array $parameters): string
     {
         $pdo = Connection::getPDO();
-
-        $novel = (new NovelRepository($pdo))->findBy('slug', $parameters[0]);
+        $novel = $this->findBy(new NovelRepository($pdo), 'slug', $parameters[0]);
         $chapters = (new ChapterRepository($pdo))->findAndCount($novel->getId());
         return $this->render('index', [
             'novel' => $novel,

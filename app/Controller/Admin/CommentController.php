@@ -46,14 +46,13 @@ class CommentController extends AbstractAdminController
     /**
      * @param array $parameters
      * @return string
-     * @throws NotFoundException
      * @throws RouteNotFoundException
      * @throws ViewRenderingException
      */
     public function show(array $parameters)
     {
         $this->authSecurity();
-        $comment = (new CommentRepository(Connection::getPDO()))->findBy('id', $parameters[0]);
+        $comment = $this->findBy(new CommentRepository(Connection::getPDO()), 'id', $parameters[0]);
         return $this->render('show', [
             'comment'     => $comment,
         ]);
@@ -61,13 +60,12 @@ class CommentController extends AbstractAdminController
 
     /**
      * @param array $parameters
-     * @throws NotFoundException
      * @throws RouteNotFoundException
      */
     public function edit(array $parameters)
     {
         $this->authSecurity();
-        $comment = (new CommentRepository(Connection::getPDO()))->findBy('id', $parameters[0]);
+        $comment = $this->findBy(new CommentRepository(Connection::getPDO()), 'id', $parameters[0]);
         $comment->setReported(-1);
         (new CommentRepository(Connection::getPDO()))->updateComment($comment);
         Response::redirection($this->router->generateUrl('admin.novel'));

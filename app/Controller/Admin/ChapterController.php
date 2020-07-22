@@ -46,7 +46,7 @@ class ChapterController extends AbstractAdminController
     {
         $this->authSecurity();
         $pdo = Connection::getPDO();
-        $novel = (new NovelRepository($pdo))->findBy('slug', $parameters[0]);
+        $novel = $this->findBy(new NovelRepository($pdo), 'slug', $parameters[0]);
         if (!empty($_POST)) {
             $status = !empty($_POST['online']);
             $chapter = (new Chapter(new Validator(array_merge($_POST, ['novel' => $novel->getId()]), $pdo)))
@@ -83,7 +83,6 @@ class ChapterController extends AbstractAdminController
     /**
      * @param array $parameters
      * @return string
-     * @throws NotFoundException
      * @throws RouteNotFoundException
      * @throws ViewRenderingException
      */
@@ -91,7 +90,7 @@ class ChapterController extends AbstractAdminController
     {
         $this->authSecurity();
         $pdo = Connection::getPDO();
-        $chapter = (new ChapterRepository($pdo))->findBy('id', $parameters[1]);
+        $chapter = $this->findBy(new ChapterRepository($pdo), 'id', $parameters[1]);
         if (!empty($_POST)) {
             $status = !empty($_POST['online']);
             $chapter = (new Chapter(new Validator($_POST, $pdo)))

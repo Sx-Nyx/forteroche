@@ -28,7 +28,7 @@ class CommentController extends AbstractController
     }
     public function new(array $parameters)
     {
-        $chapter = (new ChapterRepository(Connection::getPDO()))->findBy('slug', $parameters[1]);
+        $this->findBy(new ChapterRepository(Connection::getPDO()), 'slug', $parameters[1]);
         $comment = (new Comment(new Validator($_POST)))
             ->setAuthor($_POST['pseudo'])
             ->setContent($_POST['commentaire'])

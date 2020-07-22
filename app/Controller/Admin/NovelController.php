@@ -61,7 +61,7 @@ class NovelController extends AbstractAdminController
     public function show(array $parameters)
     {
         $this->authSecurity();
-        $novel = (new NovelRepository(Connection::getPDO()))->findBy('slug', $parameters[0]);
+        $novel = $this->findBy(new NovelRepository(Connection::getPDO()), 'slug', $parameters[0]);
         return $this->render('show', [
             'novel' => $novel
         ]);

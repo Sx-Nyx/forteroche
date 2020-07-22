@@ -123,7 +123,7 @@ class Router
     /**
      * @return string
      */
-    private function generate404(): string
+    public function generate404(): string
     {
         http_response_code(404);
         include $this->notFound;

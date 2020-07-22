@@ -2,6 +2,9 @@
 
 namespace Framework\Controller;
 
+use App\Repository\NovelRepository;
+use Framework\Database\AbstractRepository;
+use Framework\Database\Exception\NotFoundException;
 use Framework\Rendering\Exception\ViewRenderingException;
 use Framework\Rendering\Renderer;
 use Framework\Routing\Router;
@@ -41,5 +44,20 @@ abstract class AbstractController
             return (new Renderer($this->layoutPath))->render($this->viewBasePath . $viewPath . '.php', $variables);
         }
         return (new Renderer($this->layoutPath))->render($this->viewBasePath . $viewPath, $variables);
+    }
+
+    /**
+     * @param AbstractRepository $repository
+     * @param string $field
+     * @param $data
+     * @return mixed
+     */
+    public function findBy(AbstractRepository $repository, string $field, $data)
+    {
+        try {
+            return $repository->findBy($field, $data);
+        } catch (NotFoundException $exception) {
+            return $this->router->generate404();
+        }
     }
 }
