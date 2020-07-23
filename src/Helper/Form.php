@@ -2,16 +2,18 @@
 
 namespace Framework\Helper;
 
+use Framework\Entity\EntityManager;
+
 class Form
 {
+    /**
+     * @var EntityManager $data
+     */
     private $data;
 
-    private $errors;
-
-    public function __construct($data, array $errors)
+    public function __construct(EntityManager $data)
     {
         $this->data = $data;
-        $this->errors = $errors;
     }
 
     /**
@@ -24,6 +26,7 @@ class Form
     {
         return <<<HTML
             <input type="text" class="login__form__input" placeholder="{$placeholder}" name="{$key}" {$this->getHTMLValidation($HTMLValidations)}>
+            {$this->getError($key)}
 HTML;
     }
 
@@ -37,6 +40,7 @@ HTML;
     {
         return <<<HTML
             <textarea class="comment__form__input" placeholder="{$placeholder}" name="{$key}" {$this->getHTMLValidation($HTMLValidations)}></textarea>
+            {$this->getError($key)}
 HTML;
     }
 
@@ -50,14 +54,22 @@ HTML;
         foreach ($HTMLValidations as $key => $value) {
             if ($key === 'required' && $value === true) {
                 $validation .= "required ";
-            }
-            if ($key === 'minlength') {
-                $validation .= "minlength=\"{$value}\" ";
-            }
-            if ($key === 'maxlength') {
-                $validation .= "maxlength=\"{$value}\" ";
+            } else {
+                $validation .= "$key=\"{$value}\" ";
             }
         }
         return $validation;
+    }
+
+    /**
+     * @param string $key
+     * @return string
+     */
+    private function getError(string $key): string
+    {
+        if (!empty($this->data->getErrors()[$key])) {
+            return '<div class="invalid-field">' . $this->data->getErrors()[$key] . '</div>';
+        }
+        return '';
     }
 }
