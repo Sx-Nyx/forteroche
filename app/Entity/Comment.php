@@ -49,9 +49,9 @@ class Comment extends EntityManager
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -63,17 +63,17 @@ class Comment extends EntityManager
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getAuthor(): string
+    public function getAuthor(): ?string
     {
         return $this->author;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return htmlentities($this->content);
     }
@@ -109,8 +109,8 @@ class Comment extends EntityManager
      */
     public function setAuthor(string $author): self
     {
-        $this->errors = $this->validator->min('pseudo', 3, 'Contenir au minimum 3 caractères.')
-                                        ->max('pseudo', 15, 'Contenir au minimum 15 caractères.')
+        $this->errors = $this->validator->min('author', 3, 'Votre pseudo doit contenir au minimum 3 caractères.')
+                                        ->max('author', 15, 'Votre pseudo doit contenir au minimum 15 caractères.')
                                         ->getErrors();
         $this->author = $author;
         return $this;
@@ -122,7 +122,7 @@ class Comment extends EntityManager
      */
     public function setContent(string $content): self
     {
-        $this->errors = $this->validator->min('commentaire', 10, 'Contenir au minimum 10 caractères.')
+        $this->errors = $this->validator->min('content', 10, 'Votre commentaire doit contenir au minimum 10 caractères.')
                                         ->getErrors();
         $this->content = $content;
         return $this;

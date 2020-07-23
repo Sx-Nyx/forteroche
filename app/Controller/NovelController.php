@@ -2,13 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Repository\ChapterRepository;
+use App\Repository\CommentRepository;
 use App\Repository\NovelRepository;
+use DateTime;
 use Framework\Controller\AbstractController;
 use Framework\Database\Connection;
 use Framework\Database\Exception\NotFoundException;
+use Framework\Helper\Form;
 use Framework\Rendering\Exception\ViewRenderingException;
+use Framework\Routing\Exception\RouteNotFoundException;
 use Framework\Routing\Router;
+use Framework\Server\Response;
+use Framework\Session\FlashMessage;
+use Framework\Validator\Validator;
 
 class NovelController extends AbstractController
 {
@@ -23,10 +31,10 @@ class NovelController extends AbstractController
     private $router;
 
     public function __construct(Router $router)
-   {
-       parent::__construct($router);
-       $this->router = $router;
-   }
+    {
+        parent::__construct($router);
+        $this->router = $router;
+    }
 
     /**
      * @param array $parameters
@@ -49,18 +57,40 @@ class NovelController extends AbstractController
      * @param array $parameters
      * @return string
      * @throws ViewRenderingException
+     * @throws RouteNotFoundException
      */
     public function show(array $parameters): string
     {
+        $comment = new Comment(new Validator($_POST));
+        $errors = [];
         try {
             $chapter = (new ChapterRepository(Connection::getPDO()))->findWithComment($parameters[1]);
         } catch (NotFoundException $exception) {
             $this->router->generate404();
         }
+        if (!empty($_POST)) {
+            $data = [
+                'reported' => 0,
+                'chapter_id' => $chapter->getId(),
+                'created_at' => new DateTime(date('Y-m-d H:i:s'))
+            ];
+            $this->hydrateEntity($comment, array_merge($data, $_POST), ['author', 'content', 'chapter_id', 'reported', 'created_at']);
+            if (empty($comment->getErrors())) {
+                (new CommentRepository(Connection::getPDO()))->createComment($comment);
+                FlashMessage::success('Votre commentaire a bien été publié.');
+                Response::redirection($this->router->generateUrl('novel.show', [
+                    'novelSlug' => $parameters[0],
+                    'chapterSlug' => $parameters[1],])
+                );
+            } else {
+                $errors = $comment->getErrors();
+            }
+        }
         return $this->render('show', [
             'novelSlug' => $parameters[0],
             'chapterSlug' => $parameters[1],
             'chapter' => $chapter,
+            'form' => new Form($comment)
         ]);
     }
 }
