@@ -60,7 +60,8 @@ class NovelController extends AbstractAdminController
     {
         $this->authSecurity();
         $pdo = Connection::getPDO();
-        $novel = $this->findBy(new NovelRepository($pdo), 'slug', $parameters[0]);
+        $repository = new NovelRepository($pdo);
+        $novel = $this->findBy($repository, 'slug', $parameters[0]);
         if (!empty($_POST)) {
             $data = [
                 'id' => $novel->getId(),
@@ -69,7 +70,7 @@ class NovelController extends AbstractAdminController
             $updatedNovel = new Novel(new Validator($_POST, $pdo));
             $this->hydrateEntity($updatedNovel, array_merge($data, $_POST), ['id', 'title', 'description', 'slug',]);
             if (empty($updatedNovel->getErrors())) {
-                (new NovelRepository(Connection::getPDO()))->updateNovel($updatedNovel);
+                $repository->updateNovel($updatedNovel);
                 FlashMessage::success('Le roman a bien été modifier.');
                 Response::redirection($this->router->generateUrl('admin.novel.show', [
                     'slug' => $updatedNovel->getSlug(),

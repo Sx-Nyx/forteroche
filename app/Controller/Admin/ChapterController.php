@@ -8,14 +8,12 @@ use App\Repository\NovelRepository;
 use DateTime;
 use Framework\Controller\AbstractAdminController;
 use Framework\Database\Connection;
-use Framework\Database\Exception\NotFoundException;
 use Framework\Helper\Form;
 use Framework\Rendering\Exception\ViewRenderingException;
 use Framework\Routing\Exception\RouteNotFoundException;
 use Framework\Routing\Router;
 use Framework\Server\Response;
 use Framework\Session\FlashMessage;
-use Framework\Session\Session;
 use Framework\Validator\Validator;
 
 class ChapterController extends AbstractAdminController
@@ -78,7 +76,8 @@ class ChapterController extends AbstractAdminController
     {
         $this->authSecurity();
         $pdo = Connection::getPDO();
-        $chapter = $this->findBy(new ChapterRepository($pdo), 'id', $parameters[1]);
+        $repository = new ChapterRepository($pdo);
+        $chapter = $this->findBy($repository, 'id', $parameters[1]);
         if (!empty($_POST)) {
             $data = [
                 'id' => $chapter->getId(),
@@ -88,7 +87,7 @@ class ChapterController extends AbstractAdminController
             $updatedChapter = new Chapter(new Validator($_POST, $pdo));
             $this->hydrateEntity($updatedChapter, array_merge($data, $_POST), ['id', 'title', 'content', 'slug', 'status']);
             if (empty($updatedChapter->getErrors())) {
-                (new ChapterRepository(Connection::getPDO()))->updateChapter($updatedChapter);
+                $repository->updateChapter($updatedChapter);
                 FlashMessage::success('Le chapitre a bien été modifier.');
                 Response::redirection($this->router->generateUrl('admin.novel'));
             }

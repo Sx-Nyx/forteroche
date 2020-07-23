@@ -62,8 +62,9 @@ class NovelController extends AbstractController
     public function show(array $parameters): string
     {
         $comment = new Comment(new Validator($_POST));
+        $pdo = Connection::getPDO();
         try {
-            $chapter = (new ChapterRepository(Connection::getPDO()))->findWithComment($parameters[1]);
+            $chapter = (new ChapterRepository($pdo))->findWithComment($parameters[1]);
         } catch (NotFoundException $exception) {
             $this->router->generate404();
         }
@@ -75,7 +76,7 @@ class NovelController extends AbstractController
             ];
             $this->hydrateEntity($comment, array_merge($data, $_POST), ['author', 'content', 'chapter_id', 'reported', 'created_at']);
             if (empty($comment->getErrors())) {
-                (new CommentRepository(Connection::getPDO()))->createComment($comment);
+                (new CommentRepository($pdo))->createComment($comment);
                 FlashMessage::success('Votre commentaire a bien été publié.');
                 Response::redirection($this->router->generateUrl('novel.show', [
                     'novelSlug' => $parameters[0],

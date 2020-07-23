@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\NovelRepository;
 use App\Repository\UserRepository;
+use Framework\Controller\AbstractAdminController;
 use Framework\Controller\AbstractController;
 use Framework\Database\Connection;
 use Framework\Database\Exception\NotFoundException;
@@ -14,12 +15,18 @@ use Framework\Security\Authentification;
 use Framework\Server\Response;
 use Framework\Session\Session;
 
-class LoginController extends AbstractController
+class LoginController extends AbstractAdminController
 {
     /**
      * @var string $viewBasePath
      */
     protected $viewBasePath = 'templates/login/';
+
+    /**
+     * @var string $layoutPath
+     */
+    protected $layoutPath = 'templates/base.php';
+
     /**
      * @var Router
      */

@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Repository\CommentRepository;
 use Framework\Controller\AbstractAdminController;
 use Framework\Database\Connection;
-use Framework\Database\Exception\NotFoundException;
 use Framework\Rendering\Exception\ViewRenderingException;
 use Framework\Routing\Exception\RouteNotFoundException;
 use Framework\Routing\Router;
