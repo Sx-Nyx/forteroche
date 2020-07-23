@@ -44,6 +44,18 @@ HTML;
 HTML;
     }
 
+    public function checkbox(string $key, string $label): string
+    {
+        $value = $this->getValue($key) === 1 ? 'checked' : '';
+        return <<<HTML
+            <div class="toggle__label">
+            <label for="scales" class="toggle__statut">{$label}</label>
+                <input type="checkbox" id="scales" name="{$key}" class="toggle__box" {$value}>
+                <label for="scales" class="toggle"></label>
+            </div>
+HTML;
+    }
+
     /**
      * @param array $HTMLValidations
      * @return string
@@ -65,7 +77,7 @@ HTML;
      * @param string $key
      * @return string|null
      */
-    private function getValue (string $key): ?string
+    private function getValue(string $key): ?string
     {
         $method = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
         return $this->data->$method();
