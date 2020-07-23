@@ -79,13 +79,12 @@ class Novel extends EntityManager
 
     /**
      * @param string $title
-     * @param int $id
      * @return $this
      */
-    public function setTitle(string $title, int $id):self
+    public function setTitle(string $title):self
     {
-        $this->errors = $this->validator->required('titre', 'Est requis.')
-                                        ->unique('novel', 'title', 'titre', 'Doit être unique.', $id)
+        $this->errors = $this->validator->required('title', 'Le titre requis.')
+                                        ->unique('novel', 'title', 'title', 'Le titre doit être unique.', $this->getId())
                                         ->getErrors();
         $this->title = $title;
         return $this;
@@ -97,7 +96,7 @@ class Novel extends EntityManager
      */
     public function setDescription(string $description):self
     {
-        $this->errors = $this->validator->required('description', 'Est requis.')
+        $this->errors = $this->validator->required('description', 'Une description est requise.')
                                         ->getErrors();
         $this->description = $description;
         return $this;

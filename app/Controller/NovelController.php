@@ -62,7 +62,6 @@ class NovelController extends AbstractController
     public function show(array $parameters): string
     {
         $comment = new Comment(new Validator($_POST));
-        $errors = [];
         try {
             $chapter = (new ChapterRepository(Connection::getPDO()))->findWithComment($parameters[1]);
         } catch (NotFoundException $exception) {
@@ -82,8 +81,6 @@ class NovelController extends AbstractController
                     'novelSlug' => $parameters[0],
                     'chapterSlug' => $parameters[1],])
                 );
-            } else {
-                $errors = $comment->getErrors();
             }
         }
         return $this->render('show', [

@@ -17,7 +17,7 @@ $router = (new Router('templates\notfound.php'))
     // ADMIN_NOVEL
     ->get('/admin', NAMESPACE_CONTROLLER . 'Admin\NovelController::index', 'admin.novel')
     ->get('/admin/roman/:slug/:id', NAMESPACE_CONTROLLER . 'Admin\NovelController::show', 'admin.novel.show')
-    ->post('/admin/roman/:slug/:id', NAMESPACE_CONTROLLER . 'Admin\NovelController::edit', 'admin.novel.edit')
+    ->post('/admin/roman/:slug/:id', NAMESPACE_CONTROLLER . 'Admin\NovelController::show', 'admin.novel.edit')
 
     // ADMIN_CHAPTER
     ->post('/admin/chapitres/:id', NAMESPACE_CONTROLLER . 'Admin\ChapterController::delete', 'admin.chapter.delete')

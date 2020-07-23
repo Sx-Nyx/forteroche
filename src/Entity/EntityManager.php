@@ -16,4 +16,5 @@ abstract class EntityManager
     {
         return $this->errors;
     }
+
 }

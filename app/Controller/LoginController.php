@@ -68,7 +68,7 @@ class LoginController extends AbstractController
 
     public function logout()
     {
-        Authentification::verify();
+        $this->authSecurity();
         Session::delete('auth');
         Response::redirection('login');
     }
