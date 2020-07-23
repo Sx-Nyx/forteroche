@@ -63,8 +63,8 @@ class ChapterController extends AbstractAdminController
             }
         }
         return $this->render('new', [
-            'chapter'   => $chapter,
-            'form'      => new Form($chapter)
+            'chapter' => $chapter,
+            'form' => new Form($chapter)
         ]);
     }
 
@@ -80,29 +80,22 @@ class ChapterController extends AbstractAdminController
         $pdo = Connection::getPDO();
         $chapter = $this->findBy(new ChapterRepository($pdo), 'id', $parameters[1]);
         if (!empty($_POST)) {
-            $status = !empty($_POST['online']);
-            $chapter = (new Chapter(new Validator($_POST, $pdo)))
-                ->setId($parameters[1])
-                ->setTitle($_POST['titre'], $parameters[1])
-                ->setContent($_POST['contenu'])
-                ->setSlug($_POST['titre'])
-                ->setStatus($status);
-            if (!empty($chapter->getErrors())) {
-                Session::set('title', $chapter->getTitle());
-                Session::set('content', $chapter->getContent());
-                Session::set('status', $chapter->getStatus());
-                return $this->render('edit', [
-                    'errors' => $chapter->getErrors(),
-                    'chapter'   => $chapter
-                ]);
-            } else {
-                (new ChapterRepository($pdo))->updateChapter($chapter);
-                FlashMessage::success('Le chapitre a bien été modifier');
-                Response::redirection($this->router->generateUrl("admin.chapter.edit", ['slug' => $parameters[0], 'id' => $parameters[1]]));
+            $data = [
+                'id' => $chapter->getId(),
+                'slug' => $_POST['title'],
+                'status' => !empty($_POST['online']),
+            ];
+            $updatedChapter = new Chapter(new Validator($_POST, $pdo));
+            $this->hydrateEntity($updatedChapter, array_merge($data, $_POST), ['id', 'title', 'content', 'slug', 'status']);
+            if (empty($updatedChapter->getErrors())) {
+                (new ChapterRepository(Connection::getPDO()))->updateChapter($updatedChapter);
+                FlashMessage::success('Le chapitre a bien été modifier.');
+                Response::redirection($this->router->generateUrl('admin.novel'));
             }
         }
+        $chapter = isset($updatedChapter) ? $updatedChapter : $chapter;
         return $this->render('edit', [
-            'chapter' => $chapter
+            'form' => new Form($chapter)
         ]);
     }
 
@@ -114,6 +107,7 @@ class ChapterController extends AbstractAdminController
     {
         $this->authSecurity();
         (new ChapterRepository(Connection::getPDO()))->delete($parameters[0]);
+        FlashMessage::success('Le chapitre a bien été supprimer.');
         Response::redirection($this->router->generateUrl('admin.novel'));
     }
 }
