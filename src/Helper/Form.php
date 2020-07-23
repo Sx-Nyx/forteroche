@@ -25,7 +25,7 @@ class Form
     public function input(string $key, string $placeholder, array $HTMLValidations = []): string
     {
         return <<<HTML
-            <input type="text" class="login__form__input" placeholder="{$placeholder}" name="{$key}" {$this->getHTMLValidation($HTMLValidations)}>
+            <input type="text" class="login__form__input" placeholder="{$placeholder}" value="{$this->getValue($key)}" name="{$key}" {$this->getHTMLValidation($HTMLValidations)}>
             {$this->getError($key)}
 HTML;
     }
@@ -39,7 +39,7 @@ HTML;
     public function textarea(string $key, string $placeholder, array $HTMLValidations = []): string
     {
         return <<<HTML
-            <textarea class="comment__form__input" placeholder="{$placeholder}" name="{$key}" {$this->getHTMLValidation($HTMLValidations)}></textarea>
+            <textarea class="comment__form__input" placeholder="{$placeholder}" name="{$key}" {$this->getHTMLValidation($HTMLValidations)}>{$this->getValue($key)}</textarea>
             {$this->getError($key)}
 HTML;
     }
@@ -59,6 +59,16 @@ HTML;
             }
         }
         return $validation;
+    }
+
+    /**
+     * @param string $key
+     * @return string|null
+     */
+    private function getValue (string $key): ?string
+    {
+        $method = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
+        return $this->data->$method();
     }
 
     /**

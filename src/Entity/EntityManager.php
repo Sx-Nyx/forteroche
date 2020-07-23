@@ -10,9 +10,9 @@ abstract class EntityManager
     protected $errors;
 
     /**
-     * @return array
+     * @return null|array
      */
-    public function getErrors():array
+    public function getErrors(): ?array
     {
         return $this->errors;
     }
