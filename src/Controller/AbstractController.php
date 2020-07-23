@@ -60,4 +60,17 @@ abstract class AbstractController
             return $this->router->generate404();
         }
     }
+
+    /**
+     * @param $entity
+     * @param array $data
+     * @param array $fields
+     */
+    public function hydrateEntity ($entity, array $data, array $fields): void
+    {
+        foreach($fields as $field) {
+            $method = 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $field)));
+            $entity->$method($data[$field]);
+        }
+    }
 }
