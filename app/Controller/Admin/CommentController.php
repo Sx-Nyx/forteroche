@@ -37,10 +37,14 @@ class CommentController extends AbstractAdminController
     public function index()
     {
         $this->authSecurity();
-        $comments = (new CommentRepository(Connection::getPDO()))->findAllReported();
-        return $this->render('index', [
-            'comments'     => $comments,
-        ]);
+        $repository = new CommentRepository(Connection::getPDO());
+        if ($repository->countReported() > 0) {
+            $comments = $repository->findAllReported();
+            return $this->render('index', [
+                'comments'     => $comments,
+            ]);
+        }
+        Response::redirection($this->router->generateUrl('admin.novel'));
     }
 
     /**
@@ -65,9 +69,10 @@ class CommentController extends AbstractAdminController
     public function edit(array $parameters)
     {
         $this->authSecurity();
-        $comment = $this->findBy(new CommentRepository(Connection::getPDO()), 'id', $parameters[0]);
+        $repository = new CommentRepository(Connection::getPDO());
+        $comment = $this->findBy($repository, 'id', $parameters[0]);
         $comment->setReported(-1);
-        (new CommentRepository(Connection::getPDO()))->updateComment($comment);
+        $repository->updateComment($comment);
         Response::redirection($this->router->generateUrl('admin.novel'));
     }
 
