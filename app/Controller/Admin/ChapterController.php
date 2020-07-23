@@ -9,6 +9,7 @@ use DateTime;
 use Framework\Controller\AbstractAdminController;
 use Framework\Database\Connection;
 use Framework\Database\Exception\NotFoundException;
+use Framework\Helper\Form;
 use Framework\Rendering\Exception\ViewRenderingException;
 use Framework\Routing\Exception\RouteNotFoundException;
 use Framework\Routing\Router;
@@ -38,7 +39,6 @@ class ChapterController extends AbstractAdminController
     /**
      * @param array $parameters
      * @return string
-     * @throws NotFoundException
      * @throws RouteNotFoundException
      * @throws ViewRenderingException
      */
@@ -47,37 +47,25 @@ class ChapterController extends AbstractAdminController
         $this->authSecurity();
         $pdo = Connection::getPDO();
         $novel = $this->findBy(new NovelRepository($pdo), 'slug', $parameters[0]);
+        $chapter = new Chapter(new Validator(array_merge($_POST, ['novelId' => $novel->getId()]), $pdo));
         if (!empty($_POST)) {
-            $status = !empty($_POST['online']);
-            $chapter = (new Chapter(new Validator(array_merge($_POST, ['novel' => $novel->getId()]), $pdo)))
-                ->setTitle($_POST['titre'])
-                ->setContent($_POST['contenu'])
-                ->setSlug($_POST['titre'])
-                ->setNovelId($novel->getId())
-                ->setCreatedAt(new DateTime(date('Y-m-d H:i:s')))
-                ->setStatus($status);
-            if (!empty($chapter->getErrors())) {
-                Session::set('title', $chapter->getTitle());
-                Session::set('content', $chapter->getContent());
-                Session::set('status', $chapter->getStatus());
-                return $this->render('new', [
-                    'errors'    => $chapter->getErrors(),
-                    'novel'     => $novel
-                ]);
-            } else {
+            $data = [
+                'novelId' => $novel->getId(),
+                'slug' => $_POST['title'],
+                'status' => !empty($_POST['online']),
+                'created_at' => new DateTime(date('Y-m-d H:i:s'))
+            ];
+            $this->hydrateEntity($chapter, array_merge($data, $_POST), ['title', 'content', 'slug', 'novelId', 'status', 'created_at']);
+            if (empty($chapter->getErrors())) {
                 (new ChapterRepository($pdo))->createChapter($chapter);
-                FlashMessage::success('Le chapitre a bien été créer');
-                return $this->render('new', [
-                    'novel'     => $novel
-                ]);
+                FlashMessage::success('Le chapitre a bien été crée.');
+                Response::redirection($this->router->generateUrl('admin.novel'));
             }
-        } else {
-            $chapter = new Chapter();
-            return $this->render('new', [
-                'novel'     => $novel,
-                'chapter'   => $chapter
-            ]);
         }
+        return $this->render('new', [
+            'chapter'   => $chapter,
+            'form'      => new Form($chapter)
+        ]);
     }
 
     /**

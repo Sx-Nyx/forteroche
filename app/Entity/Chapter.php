@@ -146,13 +146,12 @@ class Chapter extends EntityManager
 
     /**
      * @param string $title
-     * @param int $id
      * @return $this
      */
-    public function setTitle(string $title, int $id): self
+    public function setTitle(string $title): self
     {
-        $this->errors = $this->validator->required('titre', 'Est requis.')
-                                        ->unique('chapter', 'title', 'titre', 'Doit être unique.', $id)
+        $this->errors = $this->validator->required('title', 'Le titre est requis.')
+                                        ->unique('chapter', 'title', 'title', 'Le titre doit être unique.', $this->getId())
                                         ->getErrors();
 
         $this->title = $title;
@@ -165,7 +164,7 @@ class Chapter extends EntityManager
      */
     public function setContent(string $content): self
     {
-        $this->errors = $this->validator->required('contenu', 'Est requis.')
+        $this->errors = $this->validator->required('content', 'Le contenu est requis.')
                                         ->getErrors();
 
         $this->content = $content;
@@ -178,7 +177,7 @@ class Chapter extends EntityManager
      */
     public function setNovelId(int $novelId): self
     {
-        $this->errors = $this->validator->exists('novel', 'novel', 'Doit exister')
+        $this->errors = $this->validator->exists('novelId', 'novel', 'Le roman doit exister')
                                         ->getErrors();
 
         $this->novelId = $novelId;
