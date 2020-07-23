@@ -16,7 +16,9 @@ use Framework\Session\FlashMessage;
     <a href="/admin" class="header__logo">Jean-Forteroche.</a>
     <nav class="header__nav header__nav-admin">
         <a href="<?= $router->generateUrl('admin.novel') ?>">Le roman</a>
-        <a href="<?= $router->generateUrl('admin.comment') ?>">Les commentaires <span class="header__notification">3</span></a>
+        <?php if ($commentReported > 0): ?>
+            <a href="<?= $router->generateUrl('admin.comment') ?>">Les commentaires <span class="header__notification"><?= $commentReported ?></span></a>
+        <?php endif ?>
         <a href="<?= $router->generateUrl('logout') ?>">Se déconnecter</a>
     </nav>
 </header>

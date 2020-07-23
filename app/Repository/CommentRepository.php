@@ -62,4 +62,13 @@ class CommentRepository extends AbstractRepository
         $query = $this->PDO->query('SELECT * FROM comment WHERE reported > 0 ORDER BY reported DESC');
         return $query->fetchAll(PDO::FETCH_CLASS, Comment::class);
     }
+
+    /**
+     * @return int
+     */
+    public function countReported():int
+    {
+        $query = $this->PDO->query('SELECT COUNT(*) FROM comment WHERE reported > 0 ORDER BY reported DESC');
+        return (int)$query->fetchColumn();
+    }
 }
