@@ -29,7 +29,7 @@ CREATE TABLE comment (
         REFERENCES chapter(id)
         ON DELETE CASCADE,
     content MEDIUMTEXT NOT NULL,
-    reported SMALLINT NOT NULL,
+    reported SMALLINT NOT NULL DEFAULT 0,
     created_at DATETIME NOT NULL,
     PRIMARY KEY (id)
 );
