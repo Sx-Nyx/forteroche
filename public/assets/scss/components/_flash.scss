@@ -1,0 +1,20 @@
+.flash {
+  width: fit-content;
+  margin: 0 auto;
+  text-align: center;
+}
+.wrapper--flash {
+  padding: 16px 0;
+}
+.danger {
+  color: #FFFFFF;
+  padding: 16px;
+  background-color: rgba(255, 0, 0, 0.49);
+  border-radius: 4px;
+}
+.success {
+  color: #FFFFFF;
+  padding: 16px;
+  background-color: #86d993;
+  border-radius: 4px;
+}

@@ -2,6 +2,7 @@
 
 namespace Framework\Routing;
 
+use Framework\Rendering\Renderer;
 use Framework\Routing\Exception\RouteNotFoundException;
 
 class Router

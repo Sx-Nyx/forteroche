@@ -30,6 +30,10 @@
   font-weight: 700;
   color: $black-color;
 }
+button.dashboard__actions {
+  background: none;
+  border: none;
+}
 .dashboard__actions:first-child {
    margin-right: 15px;
  }

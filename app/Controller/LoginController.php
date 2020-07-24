@@ -13,6 +13,7 @@ use Framework\Routing\Exception\RouteNotFoundException;
 use Framework\Routing\Router;
 use Framework\Security\Authentification;
 use Framework\Server\Response;
+use Framework\Session\FlashMessage;
 use Framework\Session\Session;
 
 class LoginController extends AbstractAdminController
@@ -77,6 +78,7 @@ class LoginController extends AbstractAdminController
     {
         $this->authSecurity();
         Session::delete('auth');
+        FlashMessage::success('Vous avez bien été déconnecté.');
         Response::redirection('login');
     }
 }

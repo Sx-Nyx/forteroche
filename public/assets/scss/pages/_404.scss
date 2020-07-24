@@ -1,0 +1,20 @@
+.body__404 {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.title__404 {
+  font-size: 3rem;
+  color: $blue-title;
+}
+.content__404 {
+  font-size: 1.5rem;
+}
+.content__404 a {
+  color: $description-color;
+  text-decoration: underline;
+  transition: .3s color;
+}
+.content__404 a:hover {
+  color: $black-color;
+}

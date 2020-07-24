@@ -13,12 +13,12 @@
         </div>
     </div>
     <form action="<?= $router->generateUrl('admin.comment.edit', ['id' => $comment->getId()]) ?>" method="POST" style="display:inline">
-        <button type="submit" class="dashboard__actions" title="Approuver">
+        <button type="submit" class="btn__link btn--success" title="Approuver">
             Approuver
         </button>
     </form>
     <form action="<?= $router->generateUrl('admin.comment.delete', ['id' => $comment->getId()]) ?>" method="POST" onsubmit="return confirm('Voulez vous vraiment supprimer ce commentaire ?')" style="display:inline">
-        <button type="submit" class="dashboard__actions" title="Supprimer">
+        <button type="submit" class="btn__link btn--danger" title="Supprimer">
             Supprimer
         </button>
     </form>

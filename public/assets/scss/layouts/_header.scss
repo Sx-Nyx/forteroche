@@ -34,11 +34,14 @@
   position: relative;
   margin-right: 15px;
 }
-
+.comment__link {
+  position: relative;
+}
 // ADMIN
-.header__nav-admin a:last-child .header__notification {
+.header__nav-admin .header__notification {
   position: absolute;
-  top: -10px;
+  top: -8px;
+  right: -15px;
   padding: 5px 7px;
   font-size: .65rem;
   border-radius: 50%;

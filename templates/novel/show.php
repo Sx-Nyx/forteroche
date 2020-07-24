@@ -25,7 +25,7 @@
                         'novelSlug'     => $novelSlug,
                         'chapterSlug'   => $chapterSlug,
                         'id'            => $comment->getId()]) ?>">
-                        <button type="submit">
+                        <button type="submit" class="report">
                             <svg>
                                 <use xlink:href="/assets/images/sprite.svg#danger"></use>
                             </svg>

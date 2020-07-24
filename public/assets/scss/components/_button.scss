@@ -1,3 +1,7 @@
+button {
+  background: none;
+  border: none;
+}
 .btn__link {
   cursor: pointer;
   font-family: "Open Sans", sans-serif;
@@ -11,3 +15,20 @@
 .btn--novel {
   text-align: center;
 }
+.btn__link.btn--success {
+  background-color: #86d993;
+  margin-right: 16px;
+}
+.btn__link.btn--danger {
+  background-color: #f5162c;
+}
+.report {
+  cursor: pointer;
+}
+.report svg{
+  color: #ff3640;
+  opacity: 1;
+  width: 20px;
+  height: 20px;
+}
+

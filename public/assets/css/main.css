@@ -109,6 +109,11 @@ body {
   letter-spacing: 1px;
 }
 
+button {
+  background: none;
+  border: none;
+}
+
 .btn__link {
   cursor: pointer;
   font-family: "Open Sans", sans-serif;
@@ -122,6 +127,50 @@ body {
 
 .btn--novel {
   text-align: center;
+}
+
+.btn__link.btn--success {
+  background-color: #86d993;
+  margin-right: 16px;
+}
+
+.btn__link.btn--danger {
+  background-color: #f5162c;
+}
+
+.report {
+  cursor: pointer;
+}
+
+.report svg {
+  color: #ff3640;
+  opacity: 1;
+  width: 20px;
+  height: 20px;
+}
+
+.flash {
+  width: fit-content;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.wrapper--flash {
+  padding: 16px 0;
+}
+
+.danger {
+  color: #FFFFFF;
+  padding: 16px;
+  background-color: rgba(255, 0, 0, 0.49);
+  border-radius: 4px;
+}
+
+.success {
+  color: #FFFFFF;
+  padding: 16px;
+  background-color: #86d993;
+  border-radius: 4px;
 }
 
 .header {
@@ -158,9 +207,14 @@ body {
   margin-right: 15px;
 }
 
-.header__nav-admin a:last-child .header__notification {
+.comment__link {
+  position: relative;
+}
+
+.header__nav-admin .header__notification {
   position: absolute;
-  top: -10px;
+  top: -8px;
+  right: -15px;
   padding: 5px 7px;
   font-size: 0.65rem;
   border-radius: 50%;
@@ -482,6 +536,12 @@ textarea.comment__form__input:focus {
   opacity: 1;
 }
 
+.comment__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .comment__content {
   font-size: 0.95rem;
   line-height: 1.2;
@@ -491,6 +551,32 @@ textarea.comment__form__input:focus {
 .comment__author {
   opacity: 0.55;
   font-size: 0.9rem;
+}
+
+.body__404 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.title__404 {
+  font-size: 3rem;
+  color: #4285f4;
+}
+
+.content__404 {
+  font-size: 1.5rem;
+}
+
+.content__404 a {
+  color: #5f6368;
+  text-decoration: underline;
+  transition: 0.3s color;
+}
+
+.content__404 a:hover {
+  color: #364655;
 }
 
 .dashboard {
@@ -530,6 +616,11 @@ textarea.comment__form__input:focus {
 .dashboard thead {
   font-weight: 700;
   color: #364655;
+}
+
+button.dashboard__actions {
+  background: none;
+  border: none;
 }
 
 .dashboard__actions:first-child {
