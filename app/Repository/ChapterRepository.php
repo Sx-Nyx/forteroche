@@ -57,9 +57,20 @@ class ChapterRepository extends AbstractRepository
      * @param int $novelId
      * @return array
      */
-    public function findAndCount(int $novelId): array
+    public function findAllOnlineBy(int $novelId)
     {
-        $chapters = $this->findAllBy($novelId);
+        $query = $this->PDO->prepare("SELECT * FROM chapter WHERE novel_id = :id AND status = 1 ORDER BY created_at");
+        $query->execute(['id' => $novelId]);
+        return $query->fetchAll(PDO::FETCH_CLASS, Chapter::class);
+    }
+
+    /**
+     * @param int $novelId
+     * @return array
+     */
+    public function findAllOnlineAndCount(int $novelId): array
+    {
+        $chapters = $this->findAllOnlineBy($novelId);
         foreach ($chapters as $chapter) {
             $query = $this->PDO->query("SELECT COUNT(id) FROM comment WHERE chapter_id = {$chapter->getId()}");
             $comment = (int)$query->fetch(PDO::FETCH_COLUMN);

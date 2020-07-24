@@ -45,7 +45,7 @@ class NovelController extends AbstractController
     {
         $pdo = Connection::getPDO();
         $novel = $this->findBy(new NovelRepository($pdo), 'slug', $parameters[0]);
-        $chapters = (new ChapterRepository($pdo))->findAndCount($novel->getId());
+        $chapters = (new ChapterRepository($pdo))->findAllOnlineAndCount($novel->getId());
         return $this->render('index', [
             'novel' => $novel,
             'novelSlug' => $novel->getSlug(),
