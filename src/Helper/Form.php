@@ -44,9 +44,22 @@ HTML;
 HTML;
     }
 
+    public function tinyMCE(string $key, string $placeholder, array $HTMLValidations = []): string
+    {
+        return <<<HTML
+            <textarea class="comment__form__input" id="tinyArea" placeholder="{$placeholder}" name="{$key}" {$this->getHTMLValidation($HTMLValidations)}>{$this->getValue($key)}</textarea>
+            {$this->getError($key)}
+HTML;
+    }
+
+    /**
+     * @param string $key
+     * @param string $label
+     * @return string
+     */
     public function checkbox(string $key, string $label): string
     {
-        $value = $this->getValue($key) === 1 ? 'checked' : '';
+        $value = (int)$this->getValue($key) === 1 ? 'checked' : '';
         return <<<HTML
             <div class="toggle__label">
             <label for="scales" class="toggle__statut">{$label}</label>

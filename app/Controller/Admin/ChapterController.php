@@ -50,7 +50,7 @@ class ChapterController extends AbstractAdminController
             $data = [
                 'novelId' => $novel->getId(),
                 'slug' => $_POST['title'],
-                'status' => !empty($_POST['online']),
+                'status' => !empty($_POST['status']),
                 'created_at' => new DateTime(date('Y-m-d H:i:s'))
             ];
             $this->hydrateEntity($chapter, array_merge($data, $_POST), ['title', 'content', 'slug', 'novelId', 'status', 'created_at']);
@@ -79,10 +79,11 @@ class ChapterController extends AbstractAdminController
         $repository = new ChapterRepository($pdo);
         $chapter = $this->findBy($repository, 'id', $parameters[1]);
         if (!empty($_POST)) {
+
             $data = [
                 'id' => $chapter->getId(),
                 'slug' => $_POST['title'],
-                'status' => !empty($_POST['online']),
+                'status' => !empty($_POST['status']),
             ];
             $updatedChapter = new Chapter(new Validator($_POST, $pdo));
             $this->hydrateEntity($updatedChapter, array_merge($data, $_POST), ['id', 'title', 'content', 'slug', 'status']);
