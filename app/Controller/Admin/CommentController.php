@@ -9,6 +9,7 @@ use Framework\Rendering\Exception\ViewRenderingException;
 use Framework\Routing\Exception\RouteNotFoundException;
 use Framework\Routing\Router;
 use Framework\Server\Response;
+use Framework\Session\FlashMessage;
 
 class CommentController extends AbstractAdminController
 {
@@ -72,7 +73,12 @@ class CommentController extends AbstractAdminController
         $comment = $this->findBy($repository, 'id', $parameters[0]);
         $comment->setReported(-1);
         $repository->updateComment($comment);
-        Response::redirection($this->router->generateUrl('admin.novel'));
+        FlashMessage::success('Le commentaire a bien été approuvé.');
+        if ($repository->countReported() > 0) {
+            Response::redirection($this->router->generateUrl('admin.comment'));
+        } else {
+            Response::redirection($this->router->generateUrl('admin.novel'));
+        }
     }
 
     /**
@@ -82,8 +88,13 @@ class CommentController extends AbstractAdminController
     public function delete(array $parameters)
     {
         $this->authSecurity();
-        (new CommentRepository(Connection::getPDO()))->delete($parameters[0]);
-        Response::redirection($this->router->generateUrl('admin.novel'));
-
+        $repository = new CommentRepository(Connection::getPDO());
+        $repository->delete($parameters[0]);
+        FlashMessage::success('Le commentaire a bien été supprimé.');
+        if ($repository->countReported() > 0) {
+            Response::redirection($this->router->generateUrl('admin.comment'));
+        } else {
+            Response::redirection($this->router->generateUrl('admin.novel'));
+        }
     }
 }
