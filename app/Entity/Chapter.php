@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use DateTime;
 use Framework\Entity\EntityManager;
+use Framework\Helper\Text;
 use Framework\Helper\UrlHelper;
 use Framework\Validator\Validator;
 
@@ -86,6 +87,17 @@ class Chapter extends EntityManager
     public function getContent(): ?string
     {
         return $this->content;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getExcerpt(): ?string
+    {
+        if ($this->content === null) {
+            return null;
+        }
+        return Text::excerpt($this->content, 500);
     }
 
     public function getNovelId(): int
