@@ -95,6 +95,17 @@ class Comment extends EntityManager
     }
 
     /**
+     * @return bool
+     */
+    public function getVerified(): bool
+    {
+        if ($this->getReported() === -1) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * @return DateTime
      * @throws \Exception
      */

@@ -65,6 +65,10 @@ body {
   color: #818198;
 }
 
+.grey {
+  opacity: 0.55;
+}
+
 .wrapper {
   padding: 40px 0 100px 0;
 }

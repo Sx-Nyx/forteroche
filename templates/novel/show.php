@@ -21,16 +21,20 @@
                 <div class="comment__footer">
                     <div class="comment__author"><?= $comment->getAuthor() ?> le <span
                                 class="comment__date"><?= $comment->getCreatedAt()->format('d F Y') ?></span></div>
-                    <form method="post" action="<?= $router->generateUrl('comment.report', [
-                        'novelSlug'     => $novelSlug,
-                        'chapterSlug'   => $chapterSlug,
-                        'id'            => $comment->getId()]) ?>">
-                        <button type="submit" class="report">
-                            <svg>
-                                <use xlink:href="/assets/images/sprite.svg#danger"></use>
-                            </svg>
-                        </button>
-                    </form>
+                    <?php if ($comment->getVerified()): ?>
+                        <p class="grey">Ce commentaire a déjà été vérifier par l'administrateur.</p>
+                    <?php else: ?>
+                        <form method="post" action="<?= $router->generateUrl('comment.report', [
+                            'novelSlug'     => $novelSlug,
+                            'chapterSlug'   => $chapterSlug,
+                            'id'            => $comment->getId()]) ?>">
+                            <button type="submit" class="report">
+                                <svg>
+                                    <use xlink:href="/assets/images/sprite.svg#danger"></use>
+                                </svg>
+                            </button>
+                        </form>
+                    <?php endif; ?>
                 </div>
 
             </div>
