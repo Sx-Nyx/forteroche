@@ -9,7 +9,7 @@
                     'novelSlug' => $novel->getSlug(),
                     'chapterSlug' => $chapter->getSlug()]) ?>">
             <h1 class="chapter__title light__title"><?= $chapter->getTitle() ?></h1>
-            <p class="chapter__excerpt"><?= $chapter->getExcerpt() ?></p>
+            <div class="chapter__excerpt"><?= $chapter->getExcerpt() ?></div>
             <span class="chapter__comment">Commentaires: <?= $chapter->getNumberComment() ?></span>
         </a>
     <?php endforeach ?>
