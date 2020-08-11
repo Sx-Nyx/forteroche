@@ -21,4 +21,12 @@ class UserRepository extends AbstractRepository
     {
         parent::__construct($PDO);
     }
+
+    public function updateUser(User $user): void
+    {
+        $this->update([
+            'username'         => $user->getUsername(),
+            'password'       => $user->getPassword(),
+        ], $user->getId());
+    }
 }

@@ -19,6 +19,7 @@ use Framework\Session\FlashMessage;
     <a href="/admin" class="header__logo">Jean-Forteroche.</a>
     <nav class="header__nav header__nav-admin">
         <a href="<?= $router->generateUrl('admin.novel') ?>">Le roman</a>
+        <a href="<?= $router->generateUrl('user.index') ?>">Votre compte</a>
         <?php if ($commentReported > 0): ?>
             <a href="<?= $router->generateUrl('admin.comment') ?>" class="comment__link">Les commentaires <span
                         class="header__notification"><?= $commentReported ?></span></a>

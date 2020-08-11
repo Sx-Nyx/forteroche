@@ -5,13 +5,11 @@ namespace App\Controller;
 use App\Repository\NovelRepository;
 use App\Repository\UserRepository;
 use Framework\Controller\AbstractAdminController;
-use Framework\Controller\AbstractController;
 use Framework\Database\Connection;
 use Framework\Database\Exception\NotFoundException;
 use Framework\Rendering\Exception\ViewRenderingException;
 use Framework\Routing\Exception\RouteNotFoundException;
 use Framework\Routing\Router;
-use Framework\Security\Authentification;
 use Framework\Server\Response;
 use Framework\Session\FlashMessage;
 use Framework\Session\Session;
@@ -67,6 +65,8 @@ class LoginController extends AbstractAdminController
                 if (password_verify($_POST['password'], $user->getPassword()) === true) {
                     Session::set('auth', $user->getId());
                     Response::redirection($this->router->generateUrl('admin.novel'));
+                } else {
+                    $this->index($error);
                 }
             } catch (NotFoundException $e) {
                 $this->index($error);

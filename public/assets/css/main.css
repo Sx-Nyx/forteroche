@@ -69,6 +69,12 @@ body {
   opacity: 0.55;
 }
 
+.invalid-field {
+  margin: 8px 0;
+  font-size: 15px;
+  color: #ff3640;
+}
+
 .wrapper {
   padding: 40px 0 100px 0;
 }
