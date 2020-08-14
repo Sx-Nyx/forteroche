@@ -44,10 +44,10 @@ HTML;
 HTML;
     }
 
-    public function tinyMCE(string $key, string $placeholder, array $HTMLValidations = []): string
+    public function tinyMCE(string $key, string $placeholder): string
     {
         return <<<HTML
-            <textarea class="comment__form__input" id="tinyArea" placeholder="{$placeholder}" name="{$key}" {$this->getHTMLValidation($HTMLValidations)}>{$this->getValue($key)}</textarea>
+            <textarea class="comment__form__input" id="tinyArea" placeholder="{$placeholder}" name="{$key}">{$this->getValue($key)}</textarea>
             {$this->getError($key)}
 HTML;
     }
