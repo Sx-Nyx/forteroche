@@ -176,9 +176,6 @@ class Chapter extends EntityManager
      */
     public function setContent(string $content): self
     {
-        $this->errors = $this->validator->required('content', 'Le contenu est requis.')
-                                        ->getErrors();
-
         $this->content = $content;
         return $this;
     }
