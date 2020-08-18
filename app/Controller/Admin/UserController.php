@@ -45,12 +45,12 @@ class UserController extends AbstractAdminController
             $error['password'] = 'Mot de passe incorect.';
             $this->index($error);
         } elseif ($_POST['new_password'] !== $_POST['new_password_confirm']) {
-            $error['password_confirm'] = 'Les mots de passes ne correspondent pas.';
+            $error['password_confirm'] = 'Les mots de passe ne correspondent pas.';
             $this->index($error);
         } else {
             $user->setPassword(password_hash($_POST['new_password'], PASSWORD_BCRYPT));
             $repository->updateUser($user);
-            FlashMessage::success('Le mot de passe a bien été modifier.');
+            FlashMessage::success('Le mot de passe a bien été modifié.');
             Response::redirection($this->router->generateUrl('user.index'));
         }
     }

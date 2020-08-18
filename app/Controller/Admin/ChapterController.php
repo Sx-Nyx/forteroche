@@ -89,7 +89,7 @@ class ChapterController extends AbstractAdminController
             $this->hydrateEntity($updatedChapter, array_merge($data, $_POST), ['id', 'title', 'content', 'slug', 'status']);
             if (empty($updatedChapter->getErrors())) {
                 $repository->updateChapter($updatedChapter);
-                FlashMessage::success('Le chapitre a bien été modifier.');
+                FlashMessage::success('Le chapitre a bien été modifié.');
                 Response::redirection($this->router->generateUrl('admin.novel'));
             }
         }
@@ -107,7 +107,7 @@ class ChapterController extends AbstractAdminController
     {
         $this->authSecurity();
         (new ChapterRepository(Connection::getPDO()))->delete($parameters[0]);
-        FlashMessage::success('Le chapitre a bien été supprimer.');
+        FlashMessage::success('Le chapitre a bien été supprimé.');
         Response::redirection($this->router->generateUrl('admin.novel'));
     }
 }

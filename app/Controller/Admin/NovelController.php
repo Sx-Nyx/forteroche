@@ -71,7 +71,7 @@ class NovelController extends AbstractAdminController
             $this->hydrateEntity($updatedNovel, array_merge($data, $_POST), ['id', 'title', 'description', 'slug',]);
             if (empty($updatedNovel->getErrors())) {
                 $repository->updateNovel($updatedNovel);
-                FlashMessage::success('Le roman a bien été modifier.');
+                FlashMessage::success('Le roman a bien été modifié.');
                 Response::redirection($this->router->generateUrl('admin.novel.show', [
                     'slug' => $updatedNovel->getSlug(),
                     'id' => $updatedNovel->getId()

@@ -57,7 +57,7 @@ class LoginController extends AbstractAdminController
      */
     public function login()
     {
-        $error['credentials'] = 'Identifiant ou mot de passe incorrect';
+        $error['credentials'] = 'Identifiant ou mot de passe incorrect.';
         if (!empty($_POST['username']) && !empty($_POST['password'])) {
             $repository = new UserRepository(Connection::getPDO());
             try {
@@ -78,7 +78,7 @@ class LoginController extends AbstractAdminController
     {
         $this->authSecurity();
         Session::delete('auth');
-        FlashMessage::success('Vous avez bien été déconnecté.');
+        FlashMessage::success('Vous avez bien été déconnecté(e).');
         Response::redirection('login');
     }
 }

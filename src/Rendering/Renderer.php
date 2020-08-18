@@ -19,7 +19,7 @@ class Renderer
     public function __construct(string $layoutPath)
     {
         if (!file_exists($layoutPath)) {
-            throw new ViewRenderingException('Unable to load layout, the file does not exist');
+            throw new ViewRenderingException('Unable to load the layout, the file does not exist');
         }
         $this->layoutPath = $layoutPath;
     }
@@ -33,7 +33,7 @@ class Renderer
     public function render(string $viewPath, array $vars = []):string
     {
         if (!file_exists($viewPath)) {
-            throw new ViewRenderingException('Unable to load view, the file does not exist');
+            throw new ViewRenderingException('Unable to load the view, the file does not exist');
         }
 
         if (!empty($vars)) {

@@ -186,7 +186,7 @@ class Chapter extends EntityManager
      */
     public function setNovelId(int $novelId): self
     {
-        $this->errors = $this->validator->exists('novelId', 'novel', 'Le roman doit exister')
+        $this->errors = $this->validator->exists('novelId', 'novel', 'Le roman doit exister.')
                                         ->getErrors();
 
         $this->novelId = $novelId;
