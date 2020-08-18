@@ -1,7 +1,7 @@
 # Project n°4
 
 Web application in PHP and Mysql for Mister Forteroche
-[Le projet](https://www.projet-4.kenjy-thiebault.fr/)
+[The project](https://www.projet-4.kenjy-thiebault.fr/)
 
 ## Requirement
 1. PHP < 7.2
@@ -36,5 +36,8 @@ Web application in PHP and Mysql for Mister Forteroche
     
 6. Run PHP server  `php -S localhost:8000 -t public` 
 
-
+## Connection
+* url : /login
+* username : admin
+* password : admin
 
