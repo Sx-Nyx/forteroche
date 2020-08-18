@@ -67,7 +67,7 @@ class Comment extends EntityManager
      */
     public function getAuthor(): ?string
     {
-        return $this->author;
+        return htmlentities($this->author);
     }
 
     /**
