@@ -36,7 +36,7 @@ Web application in PHP and Mysql for Mister Forteroche
     
 6. Run PHP server  `php -S localhost:8000 -t public` 
 
-## Connection
+## Connexion
 * url : /login
 * username : admin
 * password : admin
