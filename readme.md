@@ -6,6 +6,7 @@ Web application in PHP and Mysql for Mister Forteroche
 ## Requirement
 1. PHP < 7.2
 2. MySql 5.6
+3. Composer < 1.10
 
 ## Installation 
 
